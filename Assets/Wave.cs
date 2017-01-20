@@ -17,7 +17,7 @@ public class Wave : MonoBehaviour {
 	public float amplitude;
 	[Range(0.01f, 0.1f)]
 	public float frequency;
-	public float speed = 20;
+	public float speed = 100;
 
 	LineRenderer renderer;
 	Vector3[] points;
@@ -36,7 +36,7 @@ public class Wave : MonoBehaviour {
 		renderer.startWidth = 0.1f;
 		waveForm = WaveForm.SINE;
 		amplitude = 10f;
-		frequency = 1f;
+		frequency = 0.1f;
 
 		// Get the screen width to obtain the step for
 		// calculating wave values in the LineRenderer points.
@@ -69,21 +69,21 @@ public class Wave : MonoBehaviour {
 
 #region WaveCalculations
 	float Sine(float x) {
-		return amplitude * Mathf.Sin(frequency * x + speed * Time.time);
+		return amplitude * Mathf.Sin(frequency * (x + speed * Time.time));
 	}
 
 	float Saw(float x) {
-		return -2 * amplitude / Mathf.PI * Mathf.Atan(1f / Mathf.Tan(
-					(frequency/10f * x + speed/4f * Time.time) * Mathf.PI));
+        var tan = Mathf.Tan(frequency * (x / 10f + (speed / 4f * Time.time)) * Mathf.PI);
+        return 2 * amplitude / Mathf.PI * Mathf.Atan(tan);
 	}
 
 	float Triangle(float x) {
-		return 2 * amplitude / Mathf.PI * Mathf.Asin(Mathf.Sin(
-					2 * Mathf.PI * frequency/10f * x + speed/2f * Time.time));
+        var sin = Mathf.Sin(2 * Mathf.PI * frequency / 10f * x + (speed * frequency) / 2f * Time.time);
+        return 2 * amplitude / Mathf.PI * Mathf.Asin(sin);
 	}
 
 	float Square(float x) {
-		return amplitude * Mathf.Sign(Mathf.Sin(frequency * x + speed * Time.time));
+		return amplitude * Mathf.Sign(Mathf.Sin(frequency * (x + speed * Time.time)));
 	}
 #endregion
 }
