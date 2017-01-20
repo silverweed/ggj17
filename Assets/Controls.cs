@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Controls : MonoBehaviour {
 
+	const float AMPLITUDE_CHANGE_SPEED = 30f;
+	const float FREQUENCY_CHANGE_SPEED = 0.02f;
+	const float SPEED_CHANGE_SPEED = 80f;
 	Wave wave;
 
 	void Start() {
@@ -17,15 +20,20 @@ public class Controls : MonoBehaviour {
 		 * buttons: change waveform
 		 */
 		float vAxis = Input.GetAxis("Vertical"),
-		      hAxis = Input.GetAxis("Horizontal");
+		      hAxis = Input.GetAxis("Horizontal"),
+		      rhAxis = Input.GetAxis("RightH");
 		if (vAxis > 0.3f)
-			wave.amplitude += 20 * Time.deltaTime;
+			wave.amplitude += AMPLITUDE_CHANGE_SPEED * Time.deltaTime;
 		else if (vAxis < -0.3f)
-			wave.amplitude -= 20 * Time.deltaTime;
+			wave.amplitude -= AMPLITUDE_CHANGE_SPEED * Time.deltaTime;
 		if (hAxis > 0.4f)
-			wave.frequency += 0.1f * Time.deltaTime;
+			wave.frequency += FREQUENCY_CHANGE_SPEED * Time.deltaTime;
 		else if (hAxis < -0.4f)
-			wave.frequency -= 0.1f * Time.deltaTime;
+			wave.frequency -= FREQUENCY_CHANGE_SPEED * Time.deltaTime;
+		if (rhAxis > 0.3f)
+			wave.speed += SPEED_CHANGE_SPEED * Time.deltaTime;
+		else if (rhAxis < -0.3f)
+			wave.speed -= SPEED_CHANGE_SPEED * Time.deltaTime;
 
 		wave.frequency = Mathf.Clamp(wave.frequency, 0.01f, 0.1f);
 		wave.amplitude = Mathf.Clamp(wave.amplitude, 10, 100);
