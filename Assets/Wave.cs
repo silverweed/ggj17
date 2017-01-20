@@ -22,6 +22,7 @@ public class Wave : MonoBehaviour {
 	LineRenderer renderer;
 	Vector3[] points;
 	float step;
+    float phase = 0f;
 
 	public Vector3 ElecronPosition {
 		get {
@@ -50,6 +51,7 @@ public class Wave : MonoBehaviour {
 						Screen.height/2f + WaveAt(waveForm, step * i),
 						1)));
 		}
+        phase += Time.deltaTime * frequency;
 	}
 
 	// Returns the value of the waveform w in position x
@@ -69,21 +71,21 @@ public class Wave : MonoBehaviour {
 
 #region WaveCalculations
 	float Sine(float x) {
-		return amplitude * Mathf.Sin(frequency * (x + speed * Time.time));
+		return amplitude * Mathf.Sin(frequency * x + speed * phase);
 	}
 
 	float Saw(float x) {
-        var tan = Mathf.Tan(frequency * (x / 10f + (speed / 4f * Time.time)) * Mathf.PI);
+        var tan = Mathf.Tan((frequency * x / 10f + speed / 4f * phase) * Mathf.PI);
         return 2 * amplitude / Mathf.PI * Mathf.Atan(tan);
 	}
 
 	float Triangle(float x) {
-        var sin = Mathf.Sin(2 * Mathf.PI * frequency / 10f * x + (speed * frequency) / 2f * Time.time);
+        var sin = Mathf.Sin(2 * Mathf.PI * frequency / 10f * x + speed / 2f * phase);
         return 2 * amplitude / Mathf.PI * Mathf.Asin(sin);
 	}
 
 	float Square(float x) {
-		return amplitude * Mathf.Sign(Mathf.Sin(frequency * (x + speed * Time.time)));
+		return amplitude * Mathf.Sign(Mathf.Sin(frequency * x + speed * phase));
 	}
 #endregion
 }
