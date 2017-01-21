@@ -25,12 +25,29 @@ public class CheckpointSystem : MonoBehaviour {
         if (!firstCheckpointReached) {
             if (!trackedObject.currentlyDestroyed && trackedObject.transform.position.x >= checkpoints[0].transform.position.x) {
                 firstCheckpointReached = true;
+                SyncWithWave(checkpoints[0]);
             }
         } else if (checkpoints.Count > 1) {
             if (!trackedObject.currentlyDestroyed && trackedObject.transform.position.x >= checkpoints[1].transform.position.x) {
                 checkpoints.RemoveAt(0);
+                SyncWithWave(checkpoints[0]);
             }
         }
+    }
+
+    void SyncWithWave(Checkpoint checkpoint) {
+        checkpoint.shape = wave.shape;
+        checkpoint.amplitude = wave.amplitude;
+        checkpoint.frequency = wave.frequency;
+        checkpoint.phase = wave.phase;
+    }
+
+    void SyncToWave(Checkpoint checkpoint) {
+        wave.amplitude = checkpoint.amplitude;
+        wave.frequency = checkpoint.frequency;
+        wave.shape = checkpoint.shape;
+        wave.phase = checkpoint.phase;
+        wave.offset = checkpoint.transform.position.x;
     }
 
     public void MoveToLastCheckpoint() {
@@ -39,12 +56,7 @@ public class CheckpointSystem : MonoBehaviour {
             wave.offset = 0;
             Camera.main.GetComponent<AudioSource>().time = 0f;
         } else {
-            var data = checkpoints[0];
-            wave.amplitude = data.amplitude;
-            wave.frequency = data.frequency;
-            wave.shape = data.shape;
-            wave.phase = data.phase;
-            wave.offset = data.transform.position.x;
+            SyncToWave(checkpoints[0]);
             Camera.main.GetComponent<AudioSource>().time = wave.offset / wave.speed;
         }
     }
