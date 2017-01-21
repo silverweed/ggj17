@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WavePls : MonoBehaviour {
 
-    const int POINTS = 200;
+    const int POINTS = 800;
 
     public WavePls.Shape waveForm;
     public float amplitude;
@@ -34,14 +34,15 @@ public class WavePls : MonoBehaviour {
     }
 
     void Update() {
-        var offset = ScreenWidth() / 4;
+		float offsetDiv = 8f;
+        var offset = ScreenWidth() / offsetDiv;
         for (int i = 0; i < points.Length; ++i) {
             renderer.SetPosition(i, new Vector3(this.offset + step * i - offset, WaveAt(waveForm, step * i - offset), 1f));
         }
         this.offset += Time.deltaTime * speed;
         phase += Time.deltaTime * frequency;
         particle.position = new Vector3(this.offset, WaveAt(waveForm, 0), 1f);
-        Camera.main.transform.position = new Vector3(this.offset + offset, Camera.main.transform.position.y, Camera.main.transform.position.z);
+        Camera.main.transform.position = new Vector3(this.offset + offset *(offsetDiv/2f -1f), Camera.main.transform.position.y, Camera.main.transform.position.z);
     }
 
     float WaveAt(WavePls.Shape shape, float offsetInScreen) {
