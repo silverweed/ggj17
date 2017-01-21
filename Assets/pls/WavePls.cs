@@ -5,7 +5,7 @@ using UnityEngine;
 public class WavePls : MonoBehaviour {
 
 	const int POINTS = 800;
-
+	public float rendererWidth = 0.005f;
 	public WavePls.Shape waveForm;
 	public float amplitude;
 	public float frequency;
@@ -22,7 +22,7 @@ public class WavePls : MonoBehaviour {
 	void Awake() {
 		renderer = gameObject.AddComponent<LineRenderer>();
 		renderer.numPositions = POINTS;
-		renderer.startWidth = 0.1f;
+		renderer.startWidth = rendererWidth;
 		step = ScreenWidth() / (renderer.numPositions - 1);
 		particle = GameObject.Find("Particle").transform;
 	}

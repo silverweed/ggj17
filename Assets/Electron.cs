@@ -8,8 +8,16 @@ public class Electron : MonoBehaviour {
 	public int life = 1;
 
 	void OnTriggerEnter2D(Collider2D coll) {
-		if (--life == 0) {
-			StartCoroutine(Die());
+
+		if(coll.GetComponent<Wall>()!=null){
+			if (--life == 0) {
+				StartCoroutine(Die());
+			}
+			return;
+		}
+		if(coll.GetComponent<PowerUp>()!=null){
+			//Todo do something
+			coll.GetComponent<PowerUp>().Pickup();	
 		}
 	}
 
@@ -24,6 +32,6 @@ public class Electron : MonoBehaviour {
 		while (ps.isPlaying) {
 			yield return null;
 		}
-		SceneManager.LoadScene("Main");
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 	}
 }
