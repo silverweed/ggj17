@@ -37,12 +37,12 @@ public class JoystickListener : MonoBehaviour {
 		if (isVZero) {
 			if (vAxis < -threshold) {
 				isVZero = false;
-				if (OnJoystickUp != null)
-					OnJoystickUp();
-			} else if (vAxis > threshold) {
-				isVZero = false;
 				if (OnJoystickDown != null)
 					OnJoystickDown();
+			} else if (vAxis > threshold) {
+				isVZero = false;
+				if (OnJoystickUp != null)
+					OnJoystickUp();
 			}
 		} else if (Mathf.Approximately(vAxis, 0)) {
 			isVZero = true;
