@@ -6,32 +6,32 @@ using UnityEngine.SceneManagement;
 public class Electron : MonoBehaviour {
 
 	public int life = 1;
-    public AudioClip hitSound;
+	public AudioClip hitSound;
 
-    CheckpointSystem checkpoint;
-    public bool currentlyDestroyed = false;
+	CheckpointSystem checkpoint;
+	public bool currentlyDestroyed = false;
 
-    void Awake() {
-        checkpoint = GameObject.FindObjectOfType<CheckpointSystem>();
-    }
+	void Awake() {
+		checkpoint = GameObject.FindObjectOfType<CheckpointSystem>();
+	}
 
 	void OnTriggerEnter2D(Collider2D coll) {
 
-		if(coll.GetComponent<Wall>()!=null){
+		if (coll.gameObject.tag == "Wall"){
 			if (!currentlyDestroyed) { --life; }
 			if (life == 0) {
 				StartCoroutine(Die());
 			}
 			return;
 		}
-		if(coll.GetComponent<PowerUp>()!=null){
+		if (coll.GetComponent<PowerUp>() != null){
 			//Todo do something
-			coll.GetComponent<PowerUp>().Pickup();	
+			coll.GetComponent<PowerUp>().Pickup();
 		}
 	}
 
 	IEnumerator Die() {
-        currentlyDestroyed = true;
+		currentlyDestroyed = true;
 		GetComponent<SpriteRenderer>().enabled = false;
 		var ps = GetComponentInChildren<ParticleSystem>();
 		var vel = ps.velocityOverLifetime;
@@ -39,16 +39,16 @@ public class Electron : MonoBehaviour {
 		rate.constantMax  = GameObject.FindObjectOfType<Wave>().speed;
 		vel.x = rate;
 		ps.Play();
-        AudioSource.PlayClipAtPoint(hitSound, transform.position);
+		AudioSource.PlayClipAtPoint(hitSound, transform.position);
 		while (ps.isPlaying) {
 			yield return null;
 		}
-        if (life <= 0) {
+		if (life <= 0) {
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        } else {
-            GetComponent<SpriteRenderer>().enabled = true;
-            currentlyDestroyed = false;
-            checkpoint.MoveToLastCheckpoint();
-        }
+		} else {
+			GetComponent<SpriteRenderer>().enabled = true;
+			currentlyDestroyed = false;
+			checkpoint.MoveToLastCheckpoint();
+		}
 	}
 }
