@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class CheckpointSystem : MonoBehaviour {
@@ -52,6 +53,7 @@ public class CheckpointSystem : MonoBehaviour {
         checkpoint.amplitude = wave.amplitude;
         checkpoint.frequency = wave.frequency;
         checkpoint.phase = wave.phase;
+        checkpoint.offset = wave.offset;
     }
 
     void SyncToWave(Checkpoint checkpoint) {
@@ -59,20 +61,37 @@ public class CheckpointSystem : MonoBehaviour {
         wave.frequency = checkpoint.frequency;
         wave.shape = checkpoint.shape;
         wave.phase = checkpoint.phase;
-        wave.offset = checkpoint.transform.position.x;
+        wave.offset = checkpoint.offset;
     }
 
     public void MoveToLastCheckpoint() {
         if (!firstCheckpointReached) {
-            wave.phase = initialPhase;
-            wave.offset = initialOffset;
             wave.shape = initialShape;
             wave.amplitude = initialAmplitude;
             wave.frequency = initialFrequency;
+            wave.phase = initialPhase;
+            wave.offset = initialOffset;
             Camera.main.GetComponent<AudioSource>().time = 0f;
         } else {
             SyncToWave(checkpoints[0]);
             Camera.main.GetComponent<AudioSource>().time = wave.offset / wave.speed;
+			StartCoroutine(slowTimeAfterSpawn());
         }
     }
+
+	const float slowDuration = 2;
+	IEnumerator slowTimeAfterSpawn(){
+		if(Time.timeScale>0){
+		float prevFixed = Time.fixedDeltaTime;
+		Time.timeScale = 0.65f;
+		Time.fixedDeltaTime *= 0.65f;
+		float curtime = 0;
+		while(curtime<slowDuration){
+			curtime += Time.deltaTime / Time.timeScale;
+			yield return null;
+		}
+		Time.timeScale = 1;
+		Time.fixedDeltaTime = prevFixed;
+		}
+	}
 }

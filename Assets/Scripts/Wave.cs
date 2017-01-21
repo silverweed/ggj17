@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Wave : MonoBehaviour {
 
-	const int POINTS = 800;
+	int POINTS = Screen.width;
 
 	public Wave.Shape shape;
 	public Material waveMaterial;
@@ -16,12 +16,14 @@ public class Wave : MonoBehaviour {
 	public float offset;
 
 	new LineRenderer renderer;
-	Vector3[] points = new Vector3[POINTS];
+	Vector3[] points;
 	float step;
 
 	Transform particle;
 
 	void Awake() {
+		POINTS = Mathf.Min(1080, Screen.width /2);
+		points = new Vector3[POINTS];
 		renderer = gameObject.AddComponent<LineRenderer>();
 		renderer.numPositions = POINTS;
 		renderer.startWidth = waveThickness;

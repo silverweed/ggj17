@@ -6,4 +6,5 @@ public class Checkpoint : MonoBehaviour {
     public float amplitude;
     public float frequency;
     public float phase;
+    public float offset;
 }

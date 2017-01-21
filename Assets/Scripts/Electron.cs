@@ -47,7 +47,7 @@ public class Electron : MonoBehaviour {
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		} else {
 			foreach (var child in GetComponentsInChildren<SpriteRenderer>()) {
-				child.enabled = false;
+				child.enabled = true;
 			}
 			//GetComponent<SpriteRenderer>().enabled = true;
 			currentlyDestroyed = false;
