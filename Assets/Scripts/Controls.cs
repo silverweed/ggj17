@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Controls : MonoBehaviour {
 
-	const float AMPLITUDE_CHANGE_SPEED = 5f;
+	const float AMPLITUDE_CHANGE_SPEED = 3f;
 	const float FREQUENCY_CHANGE_SPEED = 1f;
 	const float SPEED_CHANGE_SPEED = 10f;
 
