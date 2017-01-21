@@ -23,7 +23,7 @@ public class Buttons : MonoBehaviour {
 	}
 
 	public void Play() {
-		SceneManager.LoadSceneAsync("Main");
+		SceneManager.LoadScene("Selection");
 	}
 
 	public void Credits() {

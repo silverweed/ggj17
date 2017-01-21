@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class LevelsScroller : MonoBehaviour {
 
+    static readonly string[] LEVELS = { "tutorial skinnato Elisa", "tutorial skinnato Elisa", "tutorial skinnato Elisa" };
+
     List<RectTransform> levels = new List<RectTransform>();
     int showedLevel = 0;
     Button back;
@@ -21,6 +23,11 @@ public class LevelsScroller : MonoBehaviour {
         joystick.OnJoystickDown += SelectBackButton;
         joystick.OnJoystickUp += DeselectBackButton;
         levels[showedLevel].gameObject.GetComponent<Button>().Select();
+    }
+
+    public void LaunchLevel() {
+        SceneManager.LoadSceneAsync(LEVELS[showedLevel]);
+        gameObject.SetActive(false);
     }
 
     public void Back() {
