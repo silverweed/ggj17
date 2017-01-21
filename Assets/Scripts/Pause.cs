@@ -18,7 +18,7 @@ public class Pause : MonoBehaviour {
 		}
 	}
 
-	GameObject pauseText;
+	GameObject pauseButtons;
 	GameObject pauseImage;
 	Wave wave;
 	Controls controls;
@@ -33,8 +33,8 @@ public class Pause : MonoBehaviour {
 	}
 
 	void Start() {
-		pauseText = GameObject.Find("PauseText");
-		pauseImage = GameObject.Find("PauseImage");
+		pauseButtons = transform.FindChild("PauseButtons").gameObject;
+		pauseImage = transform.FindChild("PauseImage").gameObject;
 		wave = GameObject.FindObjectOfType<Wave>();
 		controls = GameObject.FindObjectOfType<Controls>();
 		SetPaused(false);
@@ -48,18 +48,22 @@ public class Pause : MonoBehaviour {
 		}
 	}
 
+    public void Resume() {
+        if (Paused) { Paused = !Paused; }
+    }
+
 	void SetPaused(bool p) {
 		if (p) {
             StartCoroutine(TransitionToPauseSound());
 			wave.enabled = false;
 			controls.enabled = false;
-			pauseText.SetActive(true);
+			pauseButtons.SetActive(true);
 			pauseImage.SetActive(true);
 		} else {
             StartCoroutine(TransitionToGameSound());
             wave.enabled = true;
 			controls.enabled = true;
-			pauseText.SetActive(false);
+			pauseButtons.SetActive(false);
 			pauseImage.SetActive(false);
 		}
 	}
