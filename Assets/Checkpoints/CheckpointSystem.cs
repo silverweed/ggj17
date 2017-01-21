@@ -52,6 +52,7 @@ public class CheckpointSystem : MonoBehaviour {
         checkpoint.amplitude = wave.amplitude;
         checkpoint.frequency = wave.frequency;
         checkpoint.phase = wave.phase;
+        checkpoint.offset = wave.offset;
     }
 
     void SyncToWave(Checkpoint checkpoint) {
@@ -59,16 +60,16 @@ public class CheckpointSystem : MonoBehaviour {
         wave.frequency = checkpoint.frequency;
         wave.shape = checkpoint.shape;
         wave.phase = checkpoint.phase;
-        wave.offset = checkpoint.transform.position.x;
+        wave.offset = checkpoint.offset;
     }
 
     public void MoveToLastCheckpoint() {
         if (!firstCheckpointReached) {
-            wave.phase = initialPhase;
-            wave.offset = initialOffset;
             wave.shape = initialShape;
             wave.amplitude = initialAmplitude;
             wave.frequency = initialFrequency;
+            wave.phase = initialPhase;
+            wave.offset = initialOffset;
             Camera.main.GetComponent<AudioSource>().time = 0f;
         } else {
             SyncToWave(checkpoints[0]);
