@@ -30,7 +30,9 @@ public class Electron : MonoBehaviour {
 
 	IEnumerator Die() {
 		currentlyDestroyed = true;
-		GetComponent<SpriteRenderer>().enabled = false;
+		foreach (var child in GetComponentsInChildren<SpriteRenderer>()){
+			child.enabled = false;
+		}
 		var ps = GetComponentInChildren<ParticleSystem>();
 		var vel = ps.velocityOverLifetime;
 		var rate = new ParticleSystem.MinMaxCurve();
@@ -44,7 +46,10 @@ public class Electron : MonoBehaviour {
 		if (life <= 0) {
 			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		} else {
-			GetComponent<SpriteRenderer>().enabled = true;
+			foreach (var child in GetComponentsInChildren<SpriteRenderer>()) {
+				child.enabled = false;
+			}
+			//GetComponent<SpriteRenderer>().enabled = true;
 			currentlyDestroyed = false;
 			checkpoint.MoveToLastCheckpoint();
 		}
