@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Electron : MonoBehaviour {
 
 	public int life = 1;
+    public AudioClip hitSound;
 
     CheckpointSystem checkpoint;
     public bool currentlyDestroyed = false;
@@ -28,6 +29,7 @@ public class Electron : MonoBehaviour {
 		rate.constantMax  = GameObject.FindObjectOfType<Wave>().speed;
 		vel.x = rate;
 		ps.Play();
+        AudioSource.PlayClipAtPoint(hitSound, transform.position);
 		while (ps.isPlaying) {
 			yield return null;
 		}
