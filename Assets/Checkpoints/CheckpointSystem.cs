@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class CheckpointSystem : MonoBehaviour {
@@ -74,6 +75,23 @@ public class CheckpointSystem : MonoBehaviour {
         } else {
             SyncToWave(checkpoints[0]);
             Camera.main.GetComponent<AudioSource>().time = wave.offset / wave.speed;
+			StartCoroutine(slowTimeAfterSpawn());
         }
     }
+
+	const float slowDuration = 2;
+	IEnumerator slowTimeAfterSpawn(){
+		if(Time.timeScale>0){
+		float prevFixed = Time.fixedDeltaTime;
+		Time.timeScale = 0.65f;
+		Time.fixedDeltaTime *= 0.65f;
+		float curtime = 0;
+		while(curtime<slowDuration){
+			curtime += Time.deltaTime / Time.timeScale;
+			yield return null;
+		}
+		Time.timeScale = 1;
+		Time.fixedDeltaTime = prevFixed;
+		}
+	}
 }
