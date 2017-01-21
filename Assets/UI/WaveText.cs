@@ -10,7 +10,7 @@ public class WaveText : MonoBehaviour {
 
 	float phase;
 	int minSize = 15;
-	int maxSize = 60;
+	int maxSize = 45;
 	Text text;
 
 	void Start() {
@@ -20,6 +20,7 @@ public class WaveText : MonoBehaviour {
 	}
 
 	void Update() {
-		text.fontSize = (int)(maxSize * Mathf.Abs(Mathf.Sin(frequency * Time.time + phase)) + minSize);
+		text.fontSize = (int)((maxSize - minSize) *
+			Mathf.Abs(Mathf.Sin(frequency * Time.time + phase)) + minSize);
 	}
 }

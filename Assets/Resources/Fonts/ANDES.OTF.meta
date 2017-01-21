@@ -1,0 +1,30 @@
+fileFormatVersion: 2
+guid: fb4919e8577d34a248b66eff652eb54e
+timeCreated: 1484999102
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Andes
+  fontNames:
+  - Andes
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: c2b059c0ef4e7499a802d1164581387f, type: 3}
+  - {fileID: 12800000, guid: 9b67ce86b7e0d4a4eb6d8070f64bcd89, type: 3}
+  - {fileID: 12800000, guid: b60085b6c77c54623af6e8b6ce8e1b81, type: 3}
+  - {fileID: 12800000, guid: 9ae7d4c8a36df4f0c81edd8c59cac972, type: 3}
+  - {fileID: 12800000, guid: 556ad0fbd36a34062aacca9f1dc8576f, type: 3}
+  - {fileID: 12800000, guid: a40995fc9a0fd48ada67ec7ba518e4bc, type: 3}
+  - {fileID: 12800000, guid: 01be952e469e84e5abc3b08ff2a1eb0c, type: 3}
+  - {fileID: 12800000, guid: 425133fee9d78420380aae70d7c3bd91, type: 3}
+  - {fileID: 12800000, guid: da8bb8cf6da1a497687f01929c46e755, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

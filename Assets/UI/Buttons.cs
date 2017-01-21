@@ -5,8 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class Buttons : MonoBehaviour {
 	
+	public GameObject credits;
+
 	public void Play() {
 		SceneManager.LoadSceneAsync("Main");
+	}
+
+	public void Credits() {
+		credits.SetActive(true);
+	}
+
+	public void CloseCredits() {
+		credits.SetActive(false);
 	}
 
 	public void Quit() {
