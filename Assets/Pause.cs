@@ -50,15 +50,53 @@ public class Pause : MonoBehaviour {
 
 	void SetPaused(bool p) {
 		if (p) {
+            StartCoroutine(TransitionToPauseSound());
 			wave.enabled = false;
 			controls.enabled = false;
 			pauseText.SetActive(true);
 			pauseImage.SetActive(true);
 		} else {
-			wave.enabled = true;
+            StartCoroutine(TransitionToGameSound());
+            wave.enabled = true;
 			controls.enabled = true;
 			pauseText.SetActive(false);
 			pauseImage.SetActive(false);
 		}
 	}
+
+    IEnumerator TransitionToPauseSound() {
+        var music = Camera.main.GetComponent<AudioSource>();
+        var pauseMusic = GetComponent<AudioSource>();
+        pauseMusic.volume = 0f;
+        pauseMusic.Play();
+        float volume = 0f;
+        while (Paused && volume < 1f) {
+            volume += Time.deltaTime * 5f;
+            music.volume = 1f - volume;
+            pauseMusic.volume = volume;
+            yield return null;
+        }
+        if (Paused) {
+            pauseMusic.volume = 1f;
+            music.Pause();
+        }
+    }
+
+    IEnumerator TransitionToGameSound() {
+        var music = Camera.main.GetComponent<AudioSource>();
+        var pauseMusic = GetComponent<AudioSource>();
+        music.volume = 0f;
+        music.UnPause();
+        float volume = 0f;
+        while (!Paused && volume < 1f) {
+            volume += Time.deltaTime * 5f;
+            music.volume = volume;
+            pauseMusic.volume = 1f - volume;
+            yield return null;
+        }
+        if (!Paused) {
+            music.volume = 1f;
+            pauseMusic.Stop();
+        }
+    }
 }
