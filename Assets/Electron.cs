@@ -8,10 +8,22 @@ public class Electron : MonoBehaviour {
 	public int life = 1;
 
 	void OnTriggerEnter2D(Collider2D coll) {
-		// TODO: game over
 		if (--life == 0) {
-			Debug.Log("You lose");
-			SceneManager.LoadScene("Main");
+			StartCoroutine(Die());
 		}
+	}
+
+	IEnumerator Die() {
+		GetComponent<SpriteRenderer>().enabled = false;
+		var ps = GetComponentInChildren<ParticleSystem>();
+		var vel = ps.velocityOverLifetime;
+		var rate = new ParticleSystem.MinMaxCurve();
+		rate.constantMax  = GameObject.FindObjectOfType<WavePls>().speed;
+		vel.x = rate;
+		ps.Play();
+		while (ps.isPlaying) {
+			yield return null;
+		}
+		SceneManager.LoadScene("Main");
 	}
 }
