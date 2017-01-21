@@ -7,17 +7,6 @@ public class Electron : MonoBehaviour {
 
 	public int life = 1;
 
-	Wave wave;
-
-	void Start() {
-		wave = GameObject.FindObjectOfType<Wave>();
-	}
-	
-	void Update() {
-		// TODO: follow wave
-		transform.position = wave.ElecronPosition;
-	}
-
 	void OnTriggerEnter2D(Collider2D coll) {
 		// TODO: game over
 		if (--life == 0) {

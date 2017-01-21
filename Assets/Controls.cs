@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Controls : MonoBehaviour {
 
-	const float AMPLITUDE_CHANGE_SPEED = 40f;
+	const float AMPLITUDE_CHANGE_SPEED = 5f;
 	const float FREQUENCY_CHANGE_SPEED = 1f;
-	const float SPEED_CHANGE_SPEED = 80f;
+	const float SPEED_CHANGE_SPEED = 10f;
 
-	public float WaveMaxFreq=2f;
-	public float WaveMinFreq=0.35f;
-	public float WaveMaxAmp=3.5f;
-	public float WaveMinAmp=0.1f;
+	public float WaveMaxFreq = 2f;
+	public float WaveMinFreq = 0.35f;
+	public float WaveMaxAmp = 3.5f;
+	public float WaveMinAmp = 0.1f;
 
 	public bool canChangeAmplitude = true,
 	            canChangeFrequency = true,
@@ -44,10 +44,12 @@ public class Controls : MonoBehaviour {
 		}
 		if (canChangeFrequency) {
 			if (hAxis > 0.4f)
-				wave.frequency -= FREQUENCY_CHANGE_SPEED* (1f - Mathf.Pow(wave.frequency/(WaveMaxFreq-WaveMinFreq),1.2f))
+				wave.frequency -= FREQUENCY_CHANGE_SPEED *
+					(1f - Mathf.Pow(wave.frequency/(WaveMaxFreq-WaveMinFreq), 1.2f))
 				   	* Time.deltaTime;
 			else if (hAxis < -0.4f)
-				wave.frequency += FREQUENCY_CHANGE_SPEED * (1f - Mathf.Pow(wave.frequency/(WaveMaxFreq-WaveMinFreq),1.2f))
+				wave.frequency += FREQUENCY_CHANGE_SPEED *
+					(1f - Mathf.Pow(wave.frequency/(WaveMaxFreq-WaveMinFreq), 1.2f))
 					* Time.deltaTime;
 		}
 		if (canChangeSpeed) {
@@ -58,7 +60,7 @@ public class Controls : MonoBehaviour {
 		}
 
 		wave.frequency = Mathf.Clamp(wave.frequency, WaveMinFreq,WaveMaxFreq);
-		wave.amplitude = Mathf.Clamp(wave.amplitude, WaveMinAmp, WaveMaxAmp );
+		wave.amplitude = Mathf.Clamp(wave.amplitude, WaveMinAmp, WaveMaxAmp);
 
 		if (canChangeForm) {
 			if (Input.GetKey(KeyCode.JoystickButton0)) // A
