@@ -10,19 +10,12 @@ public class Pause : MonoBehaviour {
 		private set;
 	}
 
-	public bool Paused {
-		get { return paused; }
-		set {
-			paused = value;
-			SetPaused(paused);
-		}
-	}
-
 	GameObject pauseButtons;
 	GameObject pauseImage;
 	Wave wave;
 	Controls controls;
 	bool paused;
+	ShowPad pad;
 
 	private Pause() {}
 
@@ -37,22 +30,24 @@ public class Pause : MonoBehaviour {
 		pauseImage = transform.FindChild("PauseImage").gameObject;
 		wave = GameObject.FindObjectOfType<Wave>();
 		controls = GameObject.FindObjectOfType<Controls>();
+		pad = GameObject.FindObjectOfType<ShowPad>();
 		SetPaused(false);
 	}
 	
 	void Update() {
 		// Pause game
-		if (Input.GetKeyDown(KeyCode.JoystickButton7)) { // start
-			Paused = !Paused;
+		if (Input.GetKeyDown(KeyCode.JoystickButton7) && !pad.Active) { // start
+			SetPaused(!paused);
 			return;
 		}
 	}
 
 	public void Resume() {
-		if (Paused) { Paused = !Paused; }
+		if (paused) { SetPaused(false); }
 	}
 
 	public void SetPaused(bool p, bool showText = true) {
+		paused = p;
 		if (p) {
 			StartCoroutine(TransitionToPauseSound());
 			wave.enabled = false;
@@ -76,13 +71,13 @@ public class Pause : MonoBehaviour {
 		pauseMusic.volume = 0f;
 		pauseMusic.Play();
 		float volume = 0f;
-		while (Paused && volume < 1f) {
+		while (paused && volume < 1f) {
 			volume += Time.deltaTime * 5f;
 			music.volume = 1f - volume;
 			pauseMusic.volume = volume;
 			yield return null;
 		}
-		if (Paused) {
+		if (paused) {
 			pauseMusic.volume = 1f;
 			music.Pause();
 		}
@@ -94,13 +89,13 @@ public class Pause : MonoBehaviour {
 		music.volume = 0f;
 		music.UnPause();
 		float volume = 0f;
-		while (!Paused && volume < 1f) {
+		while (!paused && volume < 1f) {
 			volume += Time.deltaTime * 5f;
 			music.volume = volume;
 			pauseMusic.volume = 1f - volume;
 			yield return null;
 		}
-		if (!Paused) {
+		if (!paused) {
 			music.volume = 1f;
 			pauseMusic.Stop();
 		}

@@ -14,6 +14,8 @@ public class ShowPad : MonoBehaviour {
 
 	public ShowType showed;
 
+	public bool Active{ get; private set;}
+
 	TotorialPad pad;
 
 	void Start() {
@@ -23,6 +25,7 @@ public class ShowPad : MonoBehaviour {
 	void Update() {
 		if (PressedRightButton()) {
 			Pause.Instance.SetPaused(false);
+			Active = false;
 			pad.Hide();
 		}
 	}
@@ -49,6 +52,7 @@ public class ShowPad : MonoBehaviour {
 			break;
 		}
 
+		Active = true;
 		Pause.Instance.SetPaused(true, false);
 	}
 
