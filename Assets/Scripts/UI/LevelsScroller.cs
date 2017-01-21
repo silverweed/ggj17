@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class LevelsScroller : MonoBehaviour {
 
-    static readonly string[] LEVELS = { "tutorial skinnato Elisa", "tutorial skinnato Elisa", "tutorial skinnato Elisa" };
+    static readonly string[] LEVELS = {
+	    "Tutorial0",
+	    "Tutorial1", "Level3"
+    };
 
     List<RectTransform> levels = new List<RectTransform>();
     int showedLevel = 0;
