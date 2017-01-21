@@ -8,6 +8,7 @@ public class Wave : MonoBehaviour {
 
 	public Wave.Shape shape;
 	public Material waveMaterial;
+	public float waveThickness = 0.1f;;
 	public float amplitude;
 	public float frequency;
 	public float speed;
@@ -23,7 +24,7 @@ public class Wave : MonoBehaviour {
 	void Awake() {
 		renderer = gameObject.AddComponent<LineRenderer>();
 		renderer.numPositions = POINTS;
-		renderer.startWidth = 0.1f;
+		renderer.startWidth = waveThickness;
 		renderer.material = waveMaterial;
 		step = ScreenWidth() / (renderer.numPositions - 1);
 		particle = GameObject.Find("Particle").transform;
