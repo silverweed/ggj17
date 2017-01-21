@@ -8,7 +8,7 @@ public class Wave : MonoBehaviour {
 
 	public Wave.Shape shape;
 	public Material waveMaterial;
-	public float waveThickness = 0.1f;;
+	public float waveThickness = 0.1f
 	public float amplitude;
 	public float frequency;
 	public float speed;
