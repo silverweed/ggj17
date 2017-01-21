@@ -37,6 +37,7 @@ public class CheckpointSystem : MonoBehaviour {
         if (!firstCheckpointReached) {
             wave.phase = 0;
             wave.offset = 0;
+            Camera.main.GetComponent<AudioSource>().time = 0f;
         } else {
             var data = checkpoints[0];
             wave.amplitude = data.amplitude;
@@ -44,6 +45,7 @@ public class CheckpointSystem : MonoBehaviour {
             wave.shape = data.shape;
             wave.phase = data.phase;
             wave.offset = data.transform.position.x;
+            Camera.main.GetComponent<AudioSource>().time = wave.offset / wave.speed;
         }
     }
 }
