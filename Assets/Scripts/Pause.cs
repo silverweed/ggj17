@@ -10,19 +10,12 @@ public class Pause : MonoBehaviour {
 		private set;
 	}
 
-	public bool Paused {
-		get { return paused; }
-		set {
-			paused = value;
-			SetPaused(paused);
-		}
-	}
-
 	GameObject pauseButtons;
 	GameObject pauseImage;
 	Wave wave;
 	Controls controls;
 	bool paused;
+	ShowPad pad;
 
 	private Pause() {}
 
@@ -37,70 +30,74 @@ public class Pause : MonoBehaviour {
 		pauseImage = transform.FindChild("PauseImage").gameObject;
 		wave = GameObject.FindObjectOfType<Wave>();
 		controls = GameObject.FindObjectOfType<Controls>();
+		pad = GameObject.FindObjectOfType<ShowPad>();
 		SetPaused(false);
 	}
 	
 	void Update() {
 		// Pause game
-		if (Input.GetKeyDown(KeyCode.JoystickButton7)) { // start
-			Paused = !Paused;
+		if (Input.GetKeyDown(KeyCode.JoystickButton7) && !pad.Active) { // start
+			SetPaused(!paused);
 			return;
 		}
 	}
 
-    public void Resume() {
-        if (Paused) { Paused = !Paused; }
-    }
+	public void Resume() {
+		if (paused) { SetPaused(false); }
+	}
 
-	void SetPaused(bool p) {
+	public void SetPaused(bool p, bool showText = true) {
+		paused = p;
 		if (p) {
-            StartCoroutine(TransitionToPauseSound());
+			StartCoroutine(TransitionToPauseSound());
 			wave.enabled = false;
 			controls.enabled = false;
-			pauseButtons.SetActive(true);
-			pauseImage.SetActive(true);
+			if (showText) {
+				pauseButtons.SetActive(true);
+				pauseImage.SetActive(true);
+			}
 		} else {
-            StartCoroutine(TransitionToGameSound());
-            wave.enabled = true;
+			StartCoroutine(TransitionToGameSound());
+			wave.enabled = true;
 			controls.enabled = true;
 			pauseButtons.SetActive(false);
 			pauseImage.SetActive(false);
 		}
 	}
 
-    IEnumerator TransitionToPauseSound() {
-        var music = Camera.main.GetComponent<AudioSource>();
-        var pauseMusic = GetComponent<AudioSource>();
-        pauseMusic.volume = 0f;
-        pauseMusic.Play();
-        float volume = 0f;
-        while (Paused && volume < 1f) {
-            volume += Time.deltaTime * 5f;
-            music.volume = 1f - volume;
-            pauseMusic.volume = volume;
-            yield return null;
-        }
-        if (Paused) {
-            pauseMusic.volume = 1f;
-            music.Pause();
-        }
-    }
+	IEnumerator TransitionToPauseSound() {
+		var music = Camera.main.GetComponent<AudioSource>();
+		var pauseMusic = GetComponent<AudioSource>();
+		pauseMusic.volume = 0f;
+		pauseMusic.Play();
+		float volume = 0f;
+		while (paused && volume < 1f) {
+			volume += Time.deltaTime * 5f;
+			music.volume = 1f - volume;
+			pauseMusic.volume = volume;
+			yield return null;
+		}
+		if (paused) {
+			pauseMusic.volume = 1f;
+			music.Pause();
+		}
+	}
 
-    IEnumerator TransitionToGameSound() {
-        var music = Camera.main.GetComponent<AudioSource>();
-        var pauseMusic = GetComponent<AudioSource>();
-        music.volume = 0f;
-        music.UnPause();
-        float volume = 0f;
-        while (!Paused && volume < 1f) {
-            volume += Time.deltaTime * 5f;
-            music.volume = volume;
-            pauseMusic.volume = 1f - volume;
-            yield return null;
-        }
-        if (!Paused) {
-            music.volume = 1f;
-            pauseMusic.Stop();
-        }
-    }
+	IEnumerator TransitionToGameSound() {
+		var music = Camera.main.GetComponent<AudioSource>();
+		var pauseMusic = GetComponent<AudioSource>();
+		music.volume = 0f;
+		music.UnPause();
+		float volume = 0f;
+		while (!paused && volume < 1f) {
+			volume += Time.deltaTime * 5f;
+			music.volume = volume;
+			pauseMusic.volume = 1f - volume;
+			yield return null;
+		}
+		if (!paused) {
+			music.volume = 1f;
+			pauseMusic.Stop();
+		}
+	}
 }
