@@ -16,13 +16,11 @@ public class Electron : MonoBehaviour {
 	}
 
 	void OnTriggerEnter2D(Collider2D coll) {
-
 		if (coll.gameObject.tag == "Wall"){
-			if (!currentlyDestroyed) { --life; }
-			if (life == 0) {
-				StartCoroutine(Die());
-			}
-			return;
+            if (!currentlyDestroyed) {
+                --life;
+                StartCoroutine(Die());
+            }
 		}
 		if (coll.GetComponent<PowerUp>() != null){
 			//Todo do something
@@ -39,7 +37,7 @@ public class Electron : MonoBehaviour {
 		rate.constantMax  = GameObject.FindObjectOfType<Wave>().speed;
 		vel.x = rate;
 		ps.Play();
-		AudioSource.PlayClipAtPoint(hitSound, transform.position);
+        AudioSource.PlayClipAtPoint(hitSound, Camera.main.transform.position);
 		while (ps.isPlaying) {
 			yield return null;
 		}
