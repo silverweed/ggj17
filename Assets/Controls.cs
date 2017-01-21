@@ -18,11 +18,11 @@ public class Controls : MonoBehaviour {
 	            canChangeForm = true,
 	            canChangeSpeed;
 
-	WavePls wave;
+	Wave wave;
 	bool paused = false;
 
 	void Start() {
-		wave = GameObject.FindObjectOfType<WavePls>();
+		wave = GameObject.FindObjectOfType<Wave>();
 #if DEBUG
 		canChangeSpeed = true;
 #endif
@@ -65,13 +65,13 @@ public class Controls : MonoBehaviour {
 
 		if (canChangeForm) {
 			if (Input.GetKey(KeyCode.JoystickButton0)) // A
-				wave.waveForm = WavePls.Shape.SINE;
+				wave.shape = Wave.Shape.SINE;
 			else if (Input.GetKey(KeyCode.JoystickButton1)) // B
-				wave.waveForm = WavePls.Shape.TRIANGLE;
+				wave.shape = Wave.Shape.TRIANGLE;
 			else if (Input.GetKey(KeyCode.JoystickButton2)) // X
-				wave.waveForm = WavePls.Shape.SAW;
+				wave.shape = Wave.Shape.SAW;
 			else if (Input.GetKey(KeyCode.JoystickButton3)) // Y
-				wave.waveForm = WavePls.Shape.SQUARE;
+				wave.shape = Wave.Shape.SQUARE;
 		}
 	}
 }

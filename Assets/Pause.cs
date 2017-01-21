@@ -20,7 +20,7 @@ public class Pause : MonoBehaviour {
 
 	GameObject pauseText;
 	GameObject pauseImage;
-	WavePls wave;
+	Wave wave;
 	Controls controls;
 	bool paused;
 
@@ -35,7 +35,7 @@ public class Pause : MonoBehaviour {
 	void Start() {
 		pauseText = GameObject.Find("PauseText");
 		pauseImage = GameObject.Find("PauseImage");
-		wave = GameObject.FindObjectOfType<WavePls>();
+		wave = GameObject.FindObjectOfType<Wave>();
 		controls = GameObject.FindObjectOfType<Controls>();
 		SetPaused(false);
 	}

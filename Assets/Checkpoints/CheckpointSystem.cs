@@ -4,13 +4,13 @@ using UnityEngine;
 public class CheckpointSystem : MonoBehaviour {
 
     Electron trackedObject;
-    WavePls wave;
+    Wave wave;
     List<Checkpoint> checkpoints = new List<Checkpoint>();
     bool firstCheckpointReached = false;
 
     void Awake() {
         trackedObject = GameObject.FindObjectOfType<Electron>();
-        wave = GameObject.FindObjectOfType<WavePls>();
+        wave = GameObject.FindObjectOfType<Wave>();
         foreach (Transform child in transform) { checkpoints.Add(child.gameObject.GetComponent<Checkpoint>()); }
         checkpoints.Sort(CompareByAxisX);
     }
@@ -41,7 +41,7 @@ public class CheckpointSystem : MonoBehaviour {
             var data = checkpoints[0];
             wave.amplitude = data.amplitude;
             wave.frequency = data.frequency;
-            wave.waveForm = data.shape;
+            wave.shape = data.shape;
             wave.phase = data.phase;
             wave.offset = data.transform.position.x;
         }
