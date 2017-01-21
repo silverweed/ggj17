@@ -7,6 +7,7 @@ public class Wave : MonoBehaviour {
 	const int POINTS = 800;
 
 	public Wave.Shape shape;
+	public Material waveMaterial;
 	public float amplitude;
 	public float frequency;
 	public float speed;
@@ -23,6 +24,7 @@ public class Wave : MonoBehaviour {
 		renderer = gameObject.AddComponent<LineRenderer>();
 		renderer.numPositions = POINTS;
 		renderer.startWidth = 0.1f;
+		renderer.material = waveMaterial;
 		step = ScreenWidth() / (renderer.numPositions - 1);
 		particle = GameObject.Find("Particle").transform;
 	}
