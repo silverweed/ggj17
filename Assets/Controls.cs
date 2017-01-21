@@ -5,7 +5,7 @@ using UnityEngine;
 public class Controls : MonoBehaviour {
 
 	const float AMPLITUDE_CHANGE_SPEED = 30f;
-	const float FREQUENCY_CHANGE_SPEED = 0.02f;
+	const float FREQUENCY_CHANGE_SPEED = 0.05f;
 	const float SPEED_CHANGE_SPEED = 80f;
 	Wave wave;
 
@@ -30,12 +30,12 @@ public class Controls : MonoBehaviour {
 			wave.frequency += FREQUENCY_CHANGE_SPEED * Time.deltaTime;
 		else if (hAxis < -0.4f)
 			wave.frequency -= FREQUENCY_CHANGE_SPEED * Time.deltaTime;
-		if (rhAxis > 0.3f)
+		if (rhAxis > 0.7f)
 			wave.speed += SPEED_CHANGE_SPEED * Time.deltaTime;
-		else if (rhAxis < -0.3f)
+		else if (rhAxis < -0.7f)
 			wave.speed -= SPEED_CHANGE_SPEED * Time.deltaTime;
 
-		wave.frequency = Mathf.Clamp(wave.frequency, 0.01f, 0.1f);
+		wave.frequency = Mathf.Clamp(wave.frequency, 0.01f, 0.05f);
 		wave.amplitude = Mathf.Clamp(wave.amplitude, 10, 100);
 
 		if (Input.GetKey(KeyCode.JoystickButton0)) // A

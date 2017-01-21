@@ -15,14 +15,14 @@ public class Wave : MonoBehaviour {
 
 	public WaveForm waveForm;
 	public float amplitude;
-	[Range(0.01f, 0.1f)]
+	[Range(0.01f, 0.05f)]
 	public float frequency;
 	public float speed = 100;
 
 	LineRenderer renderer;
 	Vector3[] points;
 	float step;
-    float phase = 0f;
+	float phase = 0f;
 
 	public Vector3 ElecronPosition {
 		get {
@@ -37,7 +37,7 @@ public class Wave : MonoBehaviour {
 		renderer.startWidth = 0.1f;
 		waveForm = WaveForm.SINE;
 		amplitude = 10f;
-		frequency = 0.1f;
+		frequency = 0.05f;
 
 		// Get the screen width to obtain the step for
 		// calculating wave values in the LineRenderer points.
@@ -51,7 +51,7 @@ public class Wave : MonoBehaviour {
 						Screen.height/2f + WaveAt(waveForm, step * i),
 						1)));
 		}
-        phase += Time.deltaTime * frequency;
+		phase += Time.deltaTime * frequency;
 	}
 
 	// Returns the value of the waveform w in position x
@@ -75,13 +75,13 @@ public class Wave : MonoBehaviour {
 	}
 
 	float Saw(float x) {
-        var tan = Mathf.Tan((frequency * x / 10f + speed / 4f * phase) * Mathf.PI);
-        return 2 * amplitude / Mathf.PI * Mathf.Atan(tan);
+		var tan = Mathf.Tan((frequency * x / 5f + speed / 5f * phase) * Mathf.PI);
+		return 2 * amplitude / Mathf.PI * Mathf.Atan(tan);
 	}
 
 	float Triangle(float x) {
-        var sin = Mathf.Sin(2 * Mathf.PI * frequency / 10f * x + speed / 2f * phase);
-        return 2 * amplitude / Mathf.PI * Mathf.Asin(sin);
+		var sin = Mathf.Sin(2 * Mathf.PI * frequency / 6f * x + speed * phase);
+		return 2 * amplitude / Mathf.PI * Mathf.Asin(sin);
 	}
 
 	float Square(float x) {
