@@ -1,9 +1,11 @@
 using UnityEngine.UI;
 using UnityEngine;
 
-public class ShowPad : MonoBehaviour {
+public class ShowPad : MonoBehaviour
+{
 	
-	public enum ShowType {
+	public enum ShowType
+	{
 		LEFT_H,
 		LEFT_V,
 		SINE,
@@ -14,62 +16,86 @@ public class ShowPad : MonoBehaviour {
 
 	public ShowType showed;
 
-	public bool Active{ get; private set;}
+	public bool Active{ get; private set; }
 
 	TotorialPad pad;
 
-	void Start() {
-		pad = GameObject.FindObjectOfType<TotorialPad>();
+	void Start ()
+	{
+		pad = GameObject.FindObjectOfType<TotorialPad> ();
 	}
 
-	void Update() {
-		if (PressedRightButton()) {
-			Pause.Instance.SetPaused(false);
+	void Update ()
+	{
+		if (PressedRightButton ()) {
+			Pause.Instance.SetPaused (false);
 			Active = false;
-			pad.Hide();
+			pad.Hide ();
 		}
 	}
 
-	void OnTriggerEnter2D(Collider2D coll) {
+	void OnTriggerEnter2D (Collider2D coll)
+	{
 		switch (showed) {
 		case ShowType.LEFT_H:
-			pad.ShowLeftHorizontal();
+			pad.ShowLeftHorizontal ();
 			break;
 		case ShowType.LEFT_V:
-			pad.ShowLeftVertical();
+			pad.ShowLeftVertical ();
 			break;
 		case ShowType.SINE:
-			pad.ShowSin();
+			pad.ShowSin ();
 			break;
 		case ShowType.TRIANGLE:
-			pad.ShowTriangle();
+			pad.ShowTriangle ();
 			break;
 		case ShowType.SAW:
-			pad.ShowSawtooth();
+			pad.ShowSawtooth ();
 			break;
 		case ShowType.SQUARE:
-			pad.ShowSquare();
+			pad.ShowSquare ();
 			break;
 		}
 
 		Active = true;
-		Pause.Instance.SetPaused(true, false);
+		Pause.Instance.SetPaused (true, false);
 	}
 
-	bool PressedRightButton() {
+	bool PressedRightButton ()
+	{
 		switch (showed) {
 		case ShowType.LEFT_H:
-			return Input.GetAxis("Horizontal") != 0;
+			return Input.GetAxis ("Horizontal") != 0;
 		case ShowType.LEFT_V:
-			return Input.GetAxis("Vertical") != 0;
+			return Input.GetAxis ("Vertical") != 0;
 		case ShowType.SINE:
-			return Input.GetKey(Controls.mapping[Wave.Shape.SINE]);
+			foreach (var key in Controls.mapping[Wave.Shape.SINE]) {
+				if (Input.GetKey (key)) {
+					return true;
+				}
+			}
+			break;
 		case ShowType.TRIANGLE:
-			return Input.GetKey(Controls.mapping[Wave.Shape.TRIANGLE]);
+			foreach (var key in Controls.mapping[Wave.Shape.TRIANGLE]) {
+				if (Input.GetKey (key)) {
+					return true;
+				}
+			}
+			break;
 		case ShowType.SAW:
-			return Input.GetKey(Controls.mapping[Wave.Shape.SAW]);
+			foreach (var key in Controls.mapping[Wave.Shape.SAW]) {
+				if (Input.GetKey (key)) {
+					return true;
+				}
+			}
+			break;
 		case ShowType.SQUARE:
-			return Input.GetKey(Controls.mapping[Wave.Shape.SQUARE]);
+			foreach (var key in Controls.mapping[Wave.Shape.SQUARE]) {
+				if (Input.GetKey (key)) {
+					return true;
+				}
+			}
+			break;
 		}
 		return false;
 	}
