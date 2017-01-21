@@ -80,7 +80,7 @@ public class Wave : MonoBehaviour {
 	}
 
 	float Triangle(float x) {
-		var sin = Mathf.Sin(2 * Mathf.PI * frequency / 6f * x + speed * phase);
+		var sin = Mathf.Sin(2 * Mathf.PI * frequency / (2 * Mathf.PI) * x + speed * phase);
 		return 2 * amplitude / Mathf.PI * Mathf.Asin(sin);
 	}
 

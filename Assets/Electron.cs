@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Electron : MonoBehaviour {
+
+	public int life = 1;
 
 	Wave wave;
 
@@ -15,7 +18,11 @@ public class Electron : MonoBehaviour {
 		transform.position = wave.ElecronPosition;
 	}
 
-	void OnCollisionEnter2D(Collision2D coll) {
+	void OnTriggerEnter2D(Collider2D coll) {
 		// TODO: game over
+		if (--life == 0) {
+			Debug.Log("You lose");
+			SceneManager.LoadScene("Main");
+		}
 	}
 }
