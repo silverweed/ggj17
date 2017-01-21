@@ -20,6 +20,7 @@ public class Buttons : MonoBehaviour {
 		joyLst = gameObject.AddComponent<JoystickListener>();
 		joyLst.OnJoystickUp += SelectNext(true);
 		joyLst.OnJoystickDown += SelectNext(false);
+        MenuMusic.StartMusic();
 	}
 
 	public void Play() {

@@ -23,11 +23,13 @@ public class LevelsScroller : MonoBehaviour {
         joystick.OnJoystickDown += SelectBackButton;
         joystick.OnJoystickUp += DeselectBackButton;
         levels[showedLevel].gameObject.GetComponent<Button>().Select();
+        MenuMusic.StartMusic();
     }
 
     public void LaunchLevel() {
-        SceneManager.LoadSceneAsync(LEVELS[showedLevel]);
         gameObject.SetActive(false);
+        MenuMusic.StopMusic();
+        SceneManager.LoadSceneAsync(LEVELS[showedLevel]);
     }
 
     public void Back() {
