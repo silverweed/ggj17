@@ -35,8 +35,9 @@ public class Pause : MonoBehaviour {
 	}
 	
 	void Update() {
-		// Pause game
-		if (Input.GetKeyDown(KeyCode.JoystickButton7) && !pad.Active) { // start
+        // Pause game
+        bool pauseRequested = Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.Space);
+        if (pauseRequested && !pad.Active) { // start
 			SetPaused(!paused);
 			return;
 		}
