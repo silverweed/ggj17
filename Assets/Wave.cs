@@ -19,7 +19,7 @@ public class Wave : MonoBehaviour {
 	public float frequency;
 	public float speed = 100;
 
-	LineRenderer renderer;
+	new LineRenderer renderer;
 	Vector3[] points;
 	float step;
 	float phase = 0f;

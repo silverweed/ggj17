@@ -12,7 +12,7 @@ public class DatSpid : MonoBehaviour {
     }
 
 	void Update () {
-        transform.Translate(-wave.speed * Proportion() * Time.deltaTime, 0f, 0f);
+        transform.Translate(wave.speed * Proportion() * Time.deltaTime, 0f, 0f);
 	}
 
     float Proportion() {
