@@ -20,10 +20,11 @@ public class Buttons : MonoBehaviour {
 		joyLst = gameObject.AddComponent<JoystickListener>();
 		joyLst.OnJoystickUp += SelectNext(true);
 		joyLst.OnJoystickDown += SelectNext(false);
+        MenuMusic.StartMusic();
 	}
 
 	public void Play() {
-		SceneManager.LoadSceneAsync("Main");
+		SceneManager.LoadScene("Selection");
 	}
 
 	public void Credits() {
@@ -44,7 +45,7 @@ public class Buttons : MonoBehaviour {
 			if (selected < 0)
 				selected = 0;
 			else {
-				selected = (selected + (up ? 1 : -1)) % buttons.Length;
+				selected = (selected + (up ? -1 : 1)) % buttons.Length;
 				if (selected < 0) selected += buttons.Length;
 			}
 

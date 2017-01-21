@@ -8,6 +8,8 @@ public class Controls : MonoBehaviour {
 	const float FREQUENCY_CHANGE_SPEED = 1f;
 	const float SPEED_CHANGE_SPEED = 10f;
 
+	public static Dictionary<Wave.Shape, KeyCode> mapping;
+
 	public float waveMaxFreq = 2f;
 	public float waveMinFreq = 0.35f;
 	public float waveMaxAmp = 3.5f;
@@ -19,7 +21,15 @@ public class Controls : MonoBehaviour {
 	            canChangeSpeed;
 
 	Wave wave;
-	bool paused = false;
+
+	static Controls() {
+		mapping = new Dictionary<Wave.Shape, KeyCode>() {
+			{ Wave.Shape.SINE, KeyCode.JoystickButton0 },
+			{ Wave.Shape.TRIANGLE, KeyCode.JoystickButton1 },
+			{ Wave.Shape.SAW, KeyCode.JoystickButton2 },
+			{ Wave.Shape.SQUARE, KeyCode.JoystickButton3 },
+		};
+	}
 
 	void Start() {
 		wave = GameObject.FindObjectOfType<Wave>();
@@ -64,13 +74,13 @@ public class Controls : MonoBehaviour {
 		wave.amplitude = Mathf.Clamp(wave.amplitude, waveMinAmp, waveMaxAmp);
 
 		if (canChangeForm) {
-			if (Input.GetKey(KeyCode.JoystickButton0)) // A
+			if (Input.GetKey(mapping[Wave.Shape.SINE])) // A
 				wave.shape = Wave.Shape.SINE;
-			else if (Input.GetKey(KeyCode.JoystickButton1)) // B
+			else if (Input.GetKey(mapping[Wave.Shape.TRIANGLE])) // B
 				wave.shape = Wave.Shape.TRIANGLE;
-			else if (Input.GetKey(KeyCode.JoystickButton2)) // X
+			else if (Input.GetKey(mapping[Wave.Shape.SAW])) // X
 				wave.shape = Wave.Shape.SAW;
-			else if (Input.GetKey(KeyCode.JoystickButton3)) // Y
+			else if (Input.GetKey(mapping[Wave.Shape.SQUARE])) // Y
 				wave.shape = Wave.Shape.SQUARE;
 		}
 	}
