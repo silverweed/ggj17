@@ -2,90 +2,83 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum WaveForm {
-	SINE,
-	SAW,
-	TRIANGLE,
-	SQUARE
-}
-
 public class Wave : MonoBehaviour {
 
-	const int POINTS_NUM = 200;
+	const int POINTS = 800;
 
-	public WaveForm waveForm;
+	public Wave.Shape shape;
 	public float amplitude;
-	[Range(0.01f, 0.05f)]
 	public float frequency;
-	public float speed = 100;
+	public float speed;
+	public float phase;
+	public float offset;
 
 	new LineRenderer renderer;
-	Vector3[] points;
+	Vector3[] points = new Vector3[POINTS];
 	float step;
-	float phase = 0f;
 
-	public Vector3 ElecronPosition {
-		get {
-			return (renderer.GetPosition(9) + renderer.GetPosition(10)) / 2f;
-		}
-	}
+	Transform particle;
 
 	void Awake() {
-		points = new Vector3[POINTS_NUM];
 		renderer = gameObject.AddComponent<LineRenderer>();
-		renderer.numPositions = POINTS_NUM;
+		renderer.numPositions = POINTS;
 		renderer.startWidth = 0.1f;
-		waveForm = WaveForm.SINE;
-		amplitude = 10f;
-		frequency = 0.05f;
-
-		// Get the screen width to obtain the step for
-		// calculating wave values in the LineRenderer points.
-		step = (float)Screen.width / (renderer.numPositions - 1);
+		step = ScreenWidth() / (renderer.numPositions - 1);
+		particle = GameObject.Find("Particle").transform;
 	}
-	
+
+	float ScreenWidth() {
+		var left = Camera.main.ScreenToWorldPoint(Vector3.zero);
+		var right = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0f));
+		return right.x - left.x;
+	}
+
 	void Update() {
+		float offsetDiv = 8f;
+		var offset = ScreenWidth() / offsetDiv;
 		for (int i = 0; i < points.Length; ++i) {
-			renderer.SetPosition(i, Camera.main.ScreenToWorldPoint(new Vector3(
-						step * i,
-						Screen.height/2f + WaveAt(waveForm, step * i),
-						1)));
+			renderer.SetPosition(i, new Vector3(this.offset + step * i - offset,
+					WaveAt(shape, step * i - offset), 1f));
 		}
+		this.offset += Time.deltaTime * speed;
 		phase += Time.deltaTime * frequency;
+		particle.position = new Vector3(this.offset, WaveAt(shape, 0), 1f);
+		Camera.main.transform.position = new Vector3(this.offset + offset *(offsetDiv/2f -1f),
+			Camera.main.transform.position.y, Camera.main.transform.position.z);
 	}
 
-	// Returns the value of the waveform w in position x
-	float WaveAt(WaveForm w, float x) {
-		switch (w) {
-		case WaveForm.SINE:
-			return Sine(x);
-		case WaveForm.SAW:
-			return Saw(x);
-		case WaveForm.TRIANGLE:
-			return Triangle(x);
-		case WaveForm.SQUARE:
-			return Square(x);
+	float WaveAt(Wave.Shape shape, float offsetInScreen) {
+		switch (shape) {
+			case Wave.Shape.SINE: return Sine(offsetInScreen);
+			case Wave.Shape.SAW: return Saw(offsetInScreen);
+			case Wave.Shape.TRIANGLE: return Triangle(offsetInScreen);
+			case Wave.Shape.SQUARE: return Square(offsetInScreen);
+			default: return 0;
 		}
-		return 0;
 	}
 
-#region WaveCalculations
-	float Sine(float x) {
-		return amplitude * Mathf.Sin(frequency * x + speed * phase);
+	float Sine(float offsetInScreen) {
+		return amplitude * Mathf.Sin(frequency * offsetInScreen + speed * phase);
 	}
 
-	float Saw(float x) {
-		var tan = Mathf.Tan((frequency * x / 5f + speed / 5f * phase) * Mathf.PI);
+	float Saw(float offsetInScreen) {
+		var tan = Mathf.Tan((frequency * offsetInScreen / 5f + speed / 5f * phase) * Mathf.PI);
 		return 2 * amplitude / Mathf.PI * Mathf.Atan(tan);
 	}
 
-	float Triangle(float x) {
-		var sin = Mathf.Sin(2 * Mathf.PI * frequency / (2 * Mathf.PI) * x + speed * phase);
+	float Triangle(float offsetInScreen) {
+		var sin = Mathf.Sin(2 * Mathf.PI * frequency / (2 * Mathf.PI) * offsetInScreen + speed * phase);
 		return 2 * amplitude / Mathf.PI * Mathf.Asin(sin);
 	}
 
-	float Square(float x) {
-		return amplitude * Mathf.Sign(Mathf.Sin(frequency * x + speed * phase));
+	float Square(float offsetInScreen) {
+		return amplitude * Mathf.Sign(Mathf.Sin(frequency * offsetInScreen + speed * phase));
 	}
-#endregion
+
+	public enum Shape {
+		SINE,
+		SAW,
+		TRIANGLE,
+		SQUARE
+	}
 }

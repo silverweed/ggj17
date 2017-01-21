@@ -6,11 +6,20 @@ using UnityEngine.SceneManagement;
 public class Electron : MonoBehaviour {
 
 	public int life = 1;
+    public AudioClip hitSound;
+
+    CheckpointSystem checkpoint;
+    public bool currentlyDestroyed = false;
+
+    void Awake() {
+        checkpoint = GameObject.FindObjectOfType<CheckpointSystem>();
+    }
 
 	void OnTriggerEnter2D(Collider2D coll) {
 
 		if(coll.GetComponent<Wall>()!=null){
-			if (--life == 0) {
+			if (!currentlyDestroyed) { --life; }
+			if (life == 0) {
 				StartCoroutine(Die());
 			}
 			return;
@@ -22,16 +31,24 @@ public class Electron : MonoBehaviour {
 	}
 
 	IEnumerator Die() {
+        currentlyDestroyed = true;
 		GetComponent<SpriteRenderer>().enabled = false;
 		var ps = GetComponentInChildren<ParticleSystem>();
 		var vel = ps.velocityOverLifetime;
 		var rate = new ParticleSystem.MinMaxCurve();
-		rate.constantMax  = GameObject.FindObjectOfType<WavePls>().speed;
+		rate.constantMax  = GameObject.FindObjectOfType<Wave>().speed;
 		vel.x = rate;
 		ps.Play();
+        AudioSource.PlayClipAtPoint(hitSound, transform.position);
 		while (ps.isPlaying) {
 			yield return null;
 		}
-		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (life <= 0) {
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        } else {
+            GetComponent<SpriteRenderer>().enabled = true;
+            currentlyDestroyed = false;
+            checkpoint.MoveToLastCheckpoint();
+        }
 	}
 }
