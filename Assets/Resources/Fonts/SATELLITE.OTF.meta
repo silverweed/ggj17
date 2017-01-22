@@ -12,7 +12,8 @@ TrueTypeFontImporter:
   fontName: Satellite
   fontNames:
   - Satellite
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: ce7fd77fe2673471ea880650c8198e23, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
