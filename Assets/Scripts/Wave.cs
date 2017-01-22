@@ -47,6 +47,7 @@ public class Wave : MonoBehaviour {
 	void Start() {
 		if (overrideColor)
 			DynamicGI.SetEmissive(renderer.GetComponent<Renderer>(), color);
+	ShapeForCode = shape;
 	}
 
 	float ScreenWidth() {

@@ -12,11 +12,15 @@ public class Electron : MonoBehaviour {
 
 	CheckpointSystem checkpoint;
 	public bool currentlyDestroyed = false;
+	Animator anim;
 
 	void Awake() {
 		checkpoint = GameObject.FindObjectOfType<CheckpointSystem>();
 	}
 
+	void Start(){
+		anim = GetComponent<Animator>();
+	}
 	void OnTriggerEnter2D(Collider2D coll) {
 		if (coll.gameObject.tag == "Wall") {
 			if (!currentlyDestroyed) {
@@ -34,6 +38,9 @@ public class Electron : MonoBehaviour {
 
 	public void ChangedWaveShape(Wave.Shape newshape){
         // if newshape != current then do something
+		anim.SetBool("triangle", newshape == Wave.Shape.SAW || newshape == Wave.Shape.TRIANGLE);
+		anim.SetBool("square" , newshape == Wave.Shape.SQUARE);
+		anim.SetBool("circle", newshape == Wave.Shape.SINE);
 		Debug.Log(newshape.ToString());
 	}
 
