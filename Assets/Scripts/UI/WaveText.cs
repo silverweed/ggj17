@@ -10,7 +10,7 @@ public class WaveText : MonoBehaviour {
 
 	float phase;
 	int minSize = 15;
-	int maxSize = 45;
+	int maxSize = 38;
 	Text text;
 
 	void Start() {
