@@ -8,7 +8,7 @@ public class Controls : MonoBehaviour
 
 	const float AMPLITUDE_CHANGE_SPEED = 3f;
 	const float FREQUENCY_CHANGE_SPEED = 1f;
-	const float SPEED_CHANGE_SPEED = 10f;
+	const float SPEED_CHANGE_SPEED = 7f;
 
 	public static Dictionary<Wave.Shape, HashSet<KeyCode>> mapping;
 	public HashSet<Wave.Shape> allowedShapes;
@@ -67,11 +67,11 @@ public class Controls : MonoBehaviour
 		if (canChangeFrequency) {
 			if (hAxis > 0.4f)
 				wave.frequency -= FREQUENCY_CHANGE_SPEED *
-				(1f - Mathf.Pow (wave.frequency / (waveMaxFreq - waveMinFreq), 1.2f))
+				0.01f + Mathf.Pow((wave.frequency - waveMinFreq) / (waveMaxFreq - waveMinFreq), 1.2f)
 				* Time.deltaTime;
 			else if (hAxis < -0.4f)
 				wave.frequency += FREQUENCY_CHANGE_SPEED *
-				(1f - Mathf.Pow (wave.frequency / (waveMaxFreq - waveMinFreq), 1.2f))
+				0.01f + Mathf.Pow((wave.frequency - waveMinFreq) / (waveMaxFreq - waveMinFreq), 1.2f)
 				* Time.deltaTime;
 		}
 		if (canChangeSpeed) {
