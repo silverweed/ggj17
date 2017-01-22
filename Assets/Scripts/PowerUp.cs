@@ -5,6 +5,7 @@ public class PowerUp : MonoBehaviour {
 	
 	public void Pickup(){
 		GetComponent<AudioSource>().Play();
+		GameObject.FindObjectOfType<RollOnPickUp>().PickedUp();
 		StartCoroutine(animateAndDestroy());
 	}
 

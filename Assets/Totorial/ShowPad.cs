@@ -23,6 +23,7 @@ public class ShowPad : MonoBehaviour
 	void Start ()
 	{
 		pad = GameObject.FindObjectOfType<TotorialPad> ();
+		print  ("found this pad: "+pad);
 	}
 
 	void Update ()
