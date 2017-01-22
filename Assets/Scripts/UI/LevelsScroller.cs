@@ -7,10 +7,12 @@ using UnityEngine.SceneManagement;
 public class LevelsScroller : MonoBehaviour {
 
     static readonly string[] LEVELS = {
-	    "Tutorial0",
-	    "Tutorial1",
-	    "Livellolo3"
+        "Tutorial0",
+        "Tutorial1",
+        "Livellolo3"
     };
+
+    static string lastPlayedLevel;
 
     List<RectTransform> levels = new List<RectTransform>();
     int showedLevel = 0;
@@ -26,11 +28,23 @@ public class LevelsScroller : MonoBehaviour {
         joystick.OnJoystickRight += () => StartCoroutine(ScrollLeft());
         joystick.OnJoystickDown += SelectBackButton;
         joystick.OnJoystickUp += DeselectBackButton;
+        if (lastPlayedLevel != null) { SetNextLevel(); }
         levels[showedLevel].gameObject.GetComponent<Button>().Select();
         MenuMusic.StartMusic();
     }
 
-    public void SetShowedLevel(int index) {
+    public static void LastCompletedLevel(string name) {
+        lastPlayedLevel = name;
+    }
+
+    void SetNextLevel() {
+        int index = 0;
+        while (lastPlayedLevel != LEVELS[index]) { ++index; }
+        ++index;
+        SetShowedLevel(index);
+    }
+
+    void SetShowedLevel(int index) {
         index = Mathf.Clamp(index, 0, levels.Count - 1);
         showedLevel = index;
         var offset = levels[showedLevel].anchoredPosition.x;
