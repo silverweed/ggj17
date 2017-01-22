@@ -30,6 +30,11 @@ public class Wave : MonoBehaviour {
 		renderer.material = waveMaterial;
 		step = ScreenWidth() / (renderer.numPositions - 1);
 		particle = GameObject.Find("Particle").transform;
+		solid = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+		solid.SetPixel(0,0, new Color(waveMaterial.color.r,waveMaterial.color.g, 
+					waveMaterial.b, 1f));
+		dotted.SetPixel(0,0, new Color(waveMaterial.color.r,waveMaterial.color.g, 
+					waveMaterial.b, 1f));
 	}
 
 	float ScreenWidth() {
@@ -86,4 +91,16 @@ public class Wave : MonoBehaviour {
 		TRIANGLE,
 		SQUARE
 	}
+	Texture2D solid;
+	Texture2D dotted;
+	private Rect[] toDrawSolid;
+	private Rect[] toDrawDotted;
+	void OnGui(){
+		foreach (Rect r in toDrawSolid ){
+			GUI.DrawTexture(r, solid);
+		}
+		foreach (Rect r in toDrawDotted){
+			GUI.DrawTexture(r,dotted);
+		}
+	}	
 }
