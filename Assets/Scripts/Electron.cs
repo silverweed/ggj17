@@ -26,7 +26,7 @@ public class Electron : MonoBehaviour {
 				StartCoroutine(Die());
 			}
 		}
-		if (coll.GetComponent<PowerUp>() != null) {
+		if (coll.GetComponent<PowerUp>() != null && !currentlyDestroyed) {
 			//Todo do something
 			coll.GetComponent<PowerUp>().Pickup();
 		}
