@@ -19,22 +19,24 @@ public class ShowPad : MonoBehaviour
 	public bool Active{ get; private set; }
 
 	TotorialPad pad;
+	Electron electron;
 	bool isFirstTime = true;
 	float timer;
 
 	void Start ()
 	{
 		pad = GameObject.FindObjectOfType<TotorialPad> ();
+		electron = GameObject.FindObjectOfType<Electron>();
 		Active = false;
 	}
 
 	void Update ()
 	{
-		if (!(isFirstTime && timer < 1f) && Active && PressedRightButton()) {
+		if (!electron.currentlyDestroyed && !(isFirstTime && timer < 1f) && Active && PressedRightButton()) {
 			Pause.Instance.SetPaused(false);
 			Active = false;
 			pad.Hide();
-			//gameObject.SetActive(false);
+			gameObject.SetActive(false);
 			isFirstTime = false;
 		}
 		timer += Time.deltaTime;
