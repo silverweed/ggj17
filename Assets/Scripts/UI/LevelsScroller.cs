@@ -9,7 +9,7 @@ public class LevelsScroller : MonoBehaviour {
     static readonly string[] LEVELS = {
         "Tutorial0",
         "Tutorial1",
-        "Livellolo3"
+        "Levellolo3"
     };
 
     static string lastPlayedLevel;
@@ -38,9 +38,10 @@ public class LevelsScroller : MonoBehaviour {
     }
 
     void SetNextLevel() {
-        int index = 0;
-        while (lastPlayedLevel != LEVELS[index]) { ++index; }
-        ++index;
+        int index = LEVELS.Length;
+        while (index > 0 && lastPlayedLevel != LEVELS[index - 1]) { --index; }
+        print(lastPlayedLevel);
+        print(index);
         SetShowedLevel(index);
     }
 
