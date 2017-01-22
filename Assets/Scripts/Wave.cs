@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class Wave : MonoBehaviour {
 
-	int POINTS = Screen.width;
+	int POINTS = Mathf.Min(Screen.width, 1080);
 
 	public Wave.Shape ShapeForCode{
 		get {
-            return shape;
-        }
+			return shape;
+		}
 		set {
 			shape = value;
-            GameObject.FindObjectOfType<Electron>().ChangedWaveShape(value);
+			GameObject.FindObjectOfType<Electron>().ChangedWaveShape(value);
 		}
 	}
 
+	public bool overrideColor;
+	public Color color;
 	public Wave.Shape shape;
 	public Material waveMaterial;
-	public float waveThickness = 0.1f; 
+	public float waveThickness = 0.1f;
 	public float amplitude;
 	public float frequency;
 	public float speed;
@@ -40,6 +42,11 @@ public class Wave : MonoBehaviour {
 		renderer.material = waveMaterial;
 		step = ScreenWidth() / (renderer.numPositions - 1);
 		particle = GameObject.Find("Particle").transform;
+	}
+
+	void Start() {
+		if (overrideColor)
+			DynamicGI.SetEmissive(renderer.GetComponent<Renderer>(), color);
 	}
 
 	float ScreenWidth() {

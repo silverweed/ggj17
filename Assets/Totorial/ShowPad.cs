@@ -41,7 +41,7 @@ public class ShowPad : MonoBehaviour
 			Pause.Instance.SetPaused(false);
 			Active = false;
 			pad.Hide();
-			gameObject.SetActive(false);
+			Destroy(this);
 			isFirstTime = false;
 		}
 	}
