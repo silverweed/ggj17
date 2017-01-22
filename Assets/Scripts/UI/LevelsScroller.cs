@@ -23,7 +23,7 @@ public class LevelsScroller : MonoBehaviour {
 	bool onButton = false;
 
 	void Start() {
-		foreach (Transform child in transform) { levels.Add(child.GetComponent<RectTransform>()); }
+		foreach (Transform child in transform) { if (child.gameObject.activeSelf) { levels.Add(child.GetComponent<RectTransform>()); } }
 		var joystick = GameObject.FindObjectOfType<JoystickListener>();
 		back = GameObject.Find("Back").GetComponent<Button>();
 		joystick.OnJoystickLeft += () => StartCoroutine(ScrollRight());
