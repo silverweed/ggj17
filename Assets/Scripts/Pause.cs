@@ -45,6 +45,10 @@ public class Pause : MonoBehaviour {
 		}
 	}
 
+    void OnApplicationFocus(bool focused) {
+        if (!focused && !paused && !pad.Active) { SetPaused(!paused); }
+    }
+
 	public void Resume() {
 		if (paused) { SetPaused(false); }
 	}

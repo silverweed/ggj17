@@ -8,8 +8,8 @@ public class LevelsScroller : MonoBehaviour {
 
 	static readonly string[] LEVELS = {
 		"Tutorial0",
-		"Tutorial1",
-		"Levellolo3",
+		"Tutorial1_graficaElisa",
+		"Levellolo3_graficaElisa",
 		"Levellolo4"
 	};
 
