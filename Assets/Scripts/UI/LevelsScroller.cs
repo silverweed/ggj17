@@ -10,8 +10,8 @@ public class LevelsScroller : MonoBehaviour {
 		"Tutorial0",
 		"Tutorial1_graficaElisa",
 		"Levellolo3_graficaElisa",
-		"Levellolo4",
-        "Elegance_graficaElisa"
+		"Elegance_graficaElisa",
+		//"Levellolo4",
     };
 
 	static string lastPlayedLevel;
