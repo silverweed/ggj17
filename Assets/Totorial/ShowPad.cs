@@ -19,27 +19,36 @@ public class ShowPad : MonoBehaviour
 	public bool Active{ get; private set; }
 
 	TotorialPad pad;
+	Electron electron;
+	bool isFirstTime = true;
+	bool youGotItDimwit = false;
+	float timer;
 
 	void Start ()
 	{
 		pad = GameObject.FindObjectOfType<TotorialPad> ();
+		electron = GameObject.FindObjectOfType<Electron>();
 		Active = false;
-		print("found this pad: "+pad);
 	}
 
 	void Update ()
 	{
-		if (Active && PressedRightButton ()) {
+		if (!electron.currentlyDestroyed && Active && PressedRightButton()) {
+			youGotItDimwit = true;
+		}
+		timer += Time.deltaTime;
+		if (!(isFirstTime && timer < 1f) && youGotItDimwit) {
 			Pause.Instance.SetPaused(false);
 			Active = false;
 			pad.Hide();
-			//gameObject.SetActive(false);
+			Destroy(this);
+			isFirstTime = false;
 		}
 	}
 
 	void OnTriggerEnter2D (Collider2D coll)
 	{
-        if (Active) { return; }
+		if (Active) { return; }
 		switch (showed) {
 		case ShowType.LEFT_H:
 			pad.ShowLeftHorizontal ();
@@ -63,6 +72,8 @@ public class ShowPad : MonoBehaviour
 
 		Active = true;
 		Pause.Instance.SetPaused (true, false);
+		youGotItDimwit = false;
+		timer = 0f;
 	}
 
 	bool PressedRightButton ()

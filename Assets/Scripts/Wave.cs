@@ -4,11 +4,23 @@ using UnityEngine;
 
 public class Wave : MonoBehaviour {
 
-	int POINTS = Screen.width;
+	int POINTS = Mathf.Min(Screen.width, 1080);
 
+	public Wave.Shape ShapeForCode{
+		get {
+			return shape;
+		}
+		set {
+			shape = value;
+			GameObject.FindObjectOfType<Electron>().ChangedWaveShape(value);
+		}
+	}
+
+	public bool overrideColor;
+	public Color color;
 	public Wave.Shape shape;
 	public Material waveMaterial;
-	public float waveThickness = 0.1f; 
+	public float waveThickness = 0.1f;
 	public float amplitude;
 	public float frequency;
 	public float speed;
@@ -32,6 +44,11 @@ public class Wave : MonoBehaviour {
 		particle = GameObject.Find("Particle").transform;
 	}
 
+	void Start() {
+		if (overrideColor)
+			DynamicGI.SetEmissive(renderer.GetComponent<Renderer>(), color);
+	}
+
 	float ScreenWidth() {
 		var left = Camera.main.ScreenToWorldPoint(Vector3.zero);
 		var right = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0f));
@@ -43,11 +60,11 @@ public class Wave : MonoBehaviour {
 		var offset = ScreenWidth() / offsetDiv;
 		for (int i = 0; i < points.Length; ++i) {
 			renderer.SetPosition(i, new Vector3(this.offset + step * i - offset,
-					WaveAt(shape, step * i - offset), 1f));
+				WaveAt(ShapeForCode, step * i - offset), 1f));
 		}
 		this.offset += Time.deltaTime * speed;
 		phase += Time.deltaTime * frequency;
-		particle.position = new Vector3(this.offset, WaveAt(shape, 0), 1f);
+		particle.position = new Vector3(this.offset, WaveAt(ShapeForCode, 0), 1f);
 		Camera.main.transform.position = new Vector3(this.offset + offset *(offsetDiv/2f -1f),
 			Camera.main.transform.position.y, Camera.main.transform.position.z);
 	}

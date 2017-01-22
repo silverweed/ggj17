@@ -23,7 +23,7 @@ public class CheckpointSystem : MonoBehaviour {
 		foreach (Transform child in transform) { checkpoints.Add(child.gameObject.GetComponent<Checkpoint>()); }
 		checkpoints.Sort(CompareByAxisX);
 
-		initialShape = wave.shape;
+		initialShape = wave.ShapeForCode;
 		initialAmplitude = wave.amplitude;
 		initialFrequency = wave.frequency;
 		initialPhase = wave.phase;
@@ -55,7 +55,7 @@ public class CheckpointSystem : MonoBehaviour {
 	}
 
 	void SyncWithWave(Checkpoint checkpoint) {
-		checkpoint.shape = wave.shape;
+		checkpoint.shape = wave.ShapeForCode;
 		checkpoint.amplitude = wave.amplitude;
 		checkpoint.frequency = wave.frequency;
 		checkpoint.phase = wave.phase;
@@ -66,7 +66,7 @@ public class CheckpointSystem : MonoBehaviour {
 	void SyncToWave(Checkpoint checkpoint) {
 		wave.amplitude = checkpoint.amplitude;
 		wave.frequency = checkpoint.frequency;
-		wave.shape = checkpoint.shape;
+		wave.ShapeForCode= checkpoint.shape;
 		wave.phase = checkpoint.phase;
 		wave.offset = checkpoint.offset;
 		controls.allowedShapes = new HashSet<Wave.Shape>(checkpoint.allowedShapes);
@@ -75,7 +75,7 @@ public class CheckpointSystem : MonoBehaviour {
 	public void MoveToLastCheckpoint() {
 		var audio = Camera.main.GetComponent<AudioSource>();
 		if (!firstCheckpointReached) {
-			wave.shape = initialShape;
+			wave.ShapeForCode= initialShape;
 			wave.amplitude = initialAmplitude;
 			wave.frequency = initialFrequency;
 			wave.phase = initialPhase;

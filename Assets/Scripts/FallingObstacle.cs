@@ -6,9 +6,15 @@ public class FallingObstacle : MonoBehaviour{
 
 	public Vector2 velocity;
 	Collider2D myRend;
+	Vector2 startPosition;
+
 	void Start(){
 		this.tag = "Wall";
 		myRend = GetComponent<Collider2D>();
+		startPosition = transform.position;
+		GameObject.FindObjectOfType<Electron>().OnRespawn += () => {
+			transform.position = startPosition;
+		};
 	}
 
 	void Update(){
