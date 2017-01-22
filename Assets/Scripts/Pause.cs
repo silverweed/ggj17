@@ -35,18 +35,20 @@ public class Pause : MonoBehaviour {
         pauseImage.SetActive(false);
         paused = false;
     }
+
+    bool TutorialPadEnabled { get { return pad != null && pad.Active; } }
 	
 	void Update() {
         // Pause game
         bool pauseRequested = Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.Space);
-        if (pauseRequested && !pad.Active) { // start
+        if (pauseRequested && !TutorialPadEnabled) { // start
 			SetPaused(!paused);
 			return;
 		}
 	}
 
     void OnApplicationFocus(bool focused) {
-        if (!focused && !paused && !pad.Active) { SetPaused(!paused); }
+        if (!focused && !paused && !TutorialPadEnabled) { SetPaused(!paused); }
     }
 
 	public void Resume() {
