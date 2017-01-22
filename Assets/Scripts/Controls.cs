@@ -90,7 +90,7 @@ public class Controls : MonoBehaviour
 					continue;
 				foreach (var key in mapping[shape]) {
 					if (Input.GetKey (key)) {
-						wave.shape = shape;
+						wave.ShapeForCode= shape;
 					}
 				}
 			}

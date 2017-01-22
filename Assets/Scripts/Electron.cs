@@ -28,6 +28,11 @@ public class Electron : MonoBehaviour {
 		}
 	}
 
+	public void ChangedWaveShape(Wave.Shape newshape){
+        // if newshape != current then do something
+		Debug.Log(newshape.ToString());
+	}
+
 	IEnumerator Die() {
 		currentlyDestroyed = true;
 		foreach (var child in GetComponentsInChildren<SpriteRenderer>()){
