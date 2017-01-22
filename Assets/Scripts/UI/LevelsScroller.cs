@@ -35,6 +35,11 @@ public class LevelsScroller : MonoBehaviour {
 		MenuMusic.StartMusic();
 	}
 
+	void Update() {
+		if (Input.GetKeyDown(KeyCode.JoystickButton1))
+			Back();
+	}
+
 	public static void LastCompletedLevel(string name) {
 		lastPlayedLevel = name;
 	}

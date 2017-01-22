@@ -20,6 +20,7 @@ public class ShowPad : MonoBehaviour
 
 	TotorialPad pad;
 	Electron electron;
+	Wave wave;
 	bool isFirstTime = true;
 	bool youGotItDimwit = false;
 	float timer;
@@ -28,6 +29,7 @@ public class ShowPad : MonoBehaviour
 	{
 		pad = GameObject.FindObjectOfType<TotorialPad> ();
 		electron = GameObject.FindObjectOfType<Electron>();
+		wave = GameObject.FindObjectOfType<Wave>();
 		Active = false;
 	}
 
@@ -86,6 +88,7 @@ public class ShowPad : MonoBehaviour
 		case ShowType.SINE:
 			foreach (var key in Controls.mapping[Wave.Shape.SINE]) {
 				if (Input.GetKey (key)) {
+					wave.ShapeForCode = Wave.Shape.SINE;
 					return true;
 				}
 			}
@@ -93,6 +96,7 @@ public class ShowPad : MonoBehaviour
 		case ShowType.TRIANGLE:
 			foreach (var key in Controls.mapping[Wave.Shape.TRIANGLE]) {
 				if (Input.GetKey (key)) {
+					wave.ShapeForCode = Wave.Shape.TRIANGLE;
 					return true;
 				}
 			}
@@ -100,6 +104,7 @@ public class ShowPad : MonoBehaviour
 		case ShowType.SAW:
 			foreach (var key in Controls.mapping[Wave.Shape.SAW]) {
 				if (Input.GetKey (key)) {
+					wave.ShapeForCode = Wave.Shape.SAW;
 					return true;
 				}
 			}
@@ -107,6 +112,7 @@ public class ShowPad : MonoBehaviour
 		case ShowType.SQUARE:
 			foreach (var key in Controls.mapping[Wave.Shape.SQUARE]) {
 				if (Input.GetKey (key)) {
+					wave.ShapeForCode = Wave.Shape.SQUARE;
 					return true;
 				}
 			}
