@@ -13,7 +13,7 @@ public class PauseButtons : MonoBehaviour {
         buttons = new Button[2];
         buttons[0] = GameObject.Find("ResumeBtn").GetComponent<Button>();
         buttons[1] = GameObject.Find("QuitBtn").GetComponent<Button>();
-        joyLst = gameObject.AddComponent<JoystickListener>();
+        joyLst = gameObject.GetComponent<JoystickListener>();
         joyLst.OnJoystickUp += SelectNext(true);
         joyLst.OnJoystickDown += SelectNext(false);
         pause = GameObject.FindObjectOfType<Pause>();
@@ -32,7 +32,7 @@ public class PauseButtons : MonoBehaviour {
             if (selected < 0)
                 selected = 0;
             else {
-                selected = (selected + (up ? 1 : -1)) % buttons.Length;
+                selected = (selected + (up ? -1 : 1)) % buttons.Length;
                 if (selected < 0) selected += buttons.Length;
             }
 
