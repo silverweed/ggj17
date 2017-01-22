@@ -30,6 +30,15 @@ public class LevelsScroller : MonoBehaviour {
         MenuMusic.StartMusic();
     }
 
+    public void SetShowedLevel(int index) {
+        index = Mathf.Clamp(index, 0, levels.Count - 1);
+        showedLevel = index;
+        var offset = levels[showedLevel].anchoredPosition.x;
+        foreach (var lvl in levels) {
+            lvl.anchoredPosition = new Vector2(lvl.anchoredPosition.x - offset, 0f);
+        }
+    }
+
     public void LaunchLevel() {
         gameObject.SetActive(false);
         MenuMusic.StopMusic();
