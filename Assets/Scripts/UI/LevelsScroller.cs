@@ -8,7 +8,8 @@ public class LevelsScroller : MonoBehaviour {
 
     static readonly string[] LEVELS = {
 	    "Tutorial0",
-	    "Tutorial1", "Level3"
+	    "Tutorial1", 
+	    "Livellolo3"
     };
 
     List<RectTransform> levels = new List<RectTransform>();

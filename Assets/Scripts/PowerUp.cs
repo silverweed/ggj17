@@ -10,6 +10,7 @@ public class PowerUp : MonoBehaviour {
 	}
 
 	IEnumerator animateAndDestroy() {
+		transform.GetChild(0).gameObject.SetActive(false);
 		var ps = GetComponentInChildren<ParticleSystem>();
 		var vel = ps.velocityOverLifetime;
 		var rate = new ParticleSystem.MinMaxCurve();

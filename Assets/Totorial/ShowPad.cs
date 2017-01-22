@@ -24,16 +24,16 @@ public class ShowPad : MonoBehaviour
 	{
 		pad = GameObject.FindObjectOfType<TotorialPad> ();
 		Active = false;
-		print  ("found this pad: "+pad);
+		print("found this pad: "+pad);
 	}
 
 	void Update ()
 	{
 		if (Active && PressedRightButton ()) {
-			Pause.Instance.SetPaused (false);
+			Pause.Instance.SetPaused(false);
 			Active = false;
-			pad.Hide ();
-            gameObject.SetActive(false);
+			pad.Hide();
+			//gameObject.SetActive(false);
 		}
 	}
 
