@@ -38,6 +38,11 @@ public class Controls : MonoBehaviour
 	void Start ()
 	{
 		wave = GameObject.FindObjectOfType<Wave> ();
+		allowedShapes = new HashSet<Wave.Shape>();
+		foreach (var shape in mapping.Keys) {
+			allowedShapes.Add(shape);
+		}
+
 #if DEBUG
 		canChangeSpeed = true;
 #endif
@@ -81,6 +86,8 @@ public class Controls : MonoBehaviour
 
 		if (canChangeForm) {
 			foreach (var shape in mapping.Keys) {
+				if (!allowedShapes.Contains(shape))
+					continue;
 				foreach (var key in mapping[shape]) {
 					if (Input.GetKey (key)) {
 						wave.shape = shape;
