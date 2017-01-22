@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class Controls : MonoBehaviour
 	const float SPEED_CHANGE_SPEED = 10f;
 
 	public static Dictionary<Wave.Shape, HashSet<KeyCode>> mapping;
+	public HashSet<Wave.Shape> allowedShapes;
 
 	public float waveMaxFreq = 2f;
 	public float waveMinFreq = 0.35f;
