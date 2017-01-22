@@ -8,7 +8,8 @@ public class LevelsScroller : MonoBehaviour {
 
     static readonly string[] LEVELS = {
 	    "Tutorial0",
-	    "Tutorial1", "Level3"
+	    "Tutorial1", 
+	    "Livellolo3"
     };
 
     List<RectTransform> levels = new List<RectTransform>();
@@ -17,7 +18,7 @@ public class LevelsScroller : MonoBehaviour {
     bool theySeeMeScrollinTheyHatin = false;
     bool onButton = false;
 
-    void Awake() {
+    void Start() {
         foreach (Transform child in transform) { levels.Add(child.GetComponent<RectTransform>()); }
         var joystick = GameObject.FindObjectOfType<JoystickListener>();
         back = GameObject.Find("Back").GetComponent<Button>();

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,6 +11,7 @@ public class Controls : MonoBehaviour
 	const float SPEED_CHANGE_SPEED = 10f;
 
 	public static Dictionary<Wave.Shape, HashSet<KeyCode>> mapping;
+	public HashSet<Wave.Shape> allowedShapes;
 
 	public float waveMaxFreq = 2f;
 	public float waveMinFreq = 0.35f;
@@ -36,6 +38,11 @@ public class Controls : MonoBehaviour
 	void Start ()
 	{
 		wave = GameObject.FindObjectOfType<Wave> ();
+		allowedShapes = new HashSet<Wave.Shape>();
+		foreach (var shape in mapping.Keys) {
+			allowedShapes.Add(shape);
+		}
+
 #if DEBUG
 		canChangeSpeed = true;
 #endif
@@ -79,6 +86,8 @@ public class Controls : MonoBehaviour
 
 		if (canChangeForm) {
 			foreach (var shape in mapping.Keys) {
+				if (!allowedShapes.Contains(shape))
+					continue;
 				foreach (var key in mapping[shape]) {
 					if (Input.GetKey (key)) {
 						wave.shape = shape;

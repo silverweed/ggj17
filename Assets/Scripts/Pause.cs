@@ -31,12 +31,15 @@ public class Pause : MonoBehaviour {
 		wave = GameObject.FindObjectOfType<Wave>();
 		controls = GameObject.FindObjectOfType<Controls>();
 		pad = GameObject.FindObjectOfType<ShowPad>();
-		SetPaused(false);
-	}
+        pauseButtons.SetActive(false);
+        pauseImage.SetActive(false);
+        paused = false;
+    }
 	
 	void Update() {
-		// Pause game
-		if (Input.GetKeyDown(KeyCode.JoystickButton7) && !pad.Active) { // start
+        // Pause game
+        bool pauseRequested = Input.GetKeyDown(KeyCode.JoystickButton7) || Input.GetKeyDown(KeyCode.Space);
+        if (pauseRequested && !pad.Active) { // start
 			SetPaused(!paused);
 			return;
 		}
@@ -47,6 +50,7 @@ public class Pause : MonoBehaviour {
 	}
 
 	public void SetPaused(bool p, bool showText = true) {
+        if (paused == p) { return; }
 		paused = p;
 		if (p) {
 			StartCoroutine(TransitionToPauseSound());

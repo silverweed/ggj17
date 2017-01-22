@@ -32,7 +32,7 @@ public class PauseButtons : MonoBehaviour {
             if (selected < 0)
                 selected = 0;
             else {
-                selected = (selected + (up ? 1 : -1)) % buttons.Length;
+                selected = (selected + (up ? -1 : 1)) % buttons.Length;
                 if (selected < 0) selected += buttons.Length;
             }
 

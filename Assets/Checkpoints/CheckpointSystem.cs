@@ -65,16 +65,17 @@ public class CheckpointSystem : MonoBehaviour {
     }
 
     public void MoveToLastCheckpoint() {
+        var audio = Camera.main.GetComponent<AudioSource>();
         if (!firstCheckpointReached) {
             wave.shape = initialShape;
             wave.amplitude = initialAmplitude;
             wave.frequency = initialFrequency;
             wave.phase = initialPhase;
             wave.offset = initialOffset;
-            Camera.main.GetComponent<AudioSource>().time = 0f;
+            if (audio) { audio.time = 0f; }
         } else {
             SyncToWave(checkpoints[0]);
-            Camera.main.GetComponent<AudioSource>().time = wave.offset / wave.speed;
+            if (audio) { audio.time = wave.offset / wave.speed; }
 			StartCoroutine(slowTimeAfterSpawn());
         }
     }
