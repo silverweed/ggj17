@@ -23,19 +23,22 @@ public class ShowPad : MonoBehaviour
 	void Start ()
 	{
 		pad = GameObject.FindObjectOfType<TotorialPad> ();
+        Active = false;
 	}
 
 	void Update ()
 	{
-		if (PressedRightButton ()) {
+		if (Active && PressedRightButton ()) {
 			Pause.Instance.SetPaused (false);
 			Active = false;
 			pad.Hide ();
+            gameObject.SetActive(false);
 		}
 	}
 
 	void OnTriggerEnter2D (Collider2D coll)
 	{
+        if (Active) { return; }
 		switch (showed) {
 		case ShowType.LEFT_H:
 			pad.ShowLeftHorizontal ();

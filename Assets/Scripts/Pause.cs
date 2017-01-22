@@ -31,8 +31,10 @@ public class Pause : MonoBehaviour {
 		wave = GameObject.FindObjectOfType<Wave>();
 		controls = GameObject.FindObjectOfType<Controls>();
 		pad = GameObject.FindObjectOfType<ShowPad>();
-		SetPaused(false);
-	}
+        pauseButtons.SetActive(false);
+        pauseImage.SetActive(false);
+        paused = false;
+    }
 	
 	void Update() {
         // Pause game
@@ -48,6 +50,7 @@ public class Pause : MonoBehaviour {
 	}
 
 	public void SetPaused(bool p, bool showText = true) {
+        if (paused == p) { return; }
 		paused = p;
 		if (p) {
 			StartCoroutine(TransitionToPauseSound());
