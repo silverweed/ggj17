@@ -21,6 +21,7 @@ public class ShowPad : MonoBehaviour
 	TotorialPad pad;
 	Electron electron;
 	bool isFirstTime = true;
+	bool youGotItDimwit = false;
 	float timer;
 
 	void Start ()
@@ -32,14 +33,17 @@ public class ShowPad : MonoBehaviour
 
 	void Update ()
 	{
-		if (!electron.currentlyDestroyed && !(isFirstTime && timer < 1f) && Active && PressedRightButton()) {
+		if (!electron.currentlyDestroyed && Active && PressedRightButton()) {
+			youGotItDimwit = true;
+		}
+		timer += Time.deltaTime;
+		if (!(isFirstTime && timer < 1f) && youGotItDimwit) {
 			Pause.Instance.SetPaused(false);
 			Active = false;
 			pad.Hide();
 			gameObject.SetActive(false);
 			isFirstTime = false;
 		}
-		timer += Time.deltaTime;
 	}
 
 	void OnTriggerEnter2D (Collider2D coll)
@@ -68,6 +72,7 @@ public class ShowPad : MonoBehaviour
 
 		Active = true;
 		Pause.Instance.SetPaused (true, false);
+		youGotItDimwit = false;
 		timer = 0f;
 	}
 

@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Electron : MonoBehaviour {
 
+	public event System.Action OnDeath, OnRespawn;
+
 	public int life = 1;
 	public AudioClip hitSound;
 
@@ -19,6 +21,8 @@ public class Electron : MonoBehaviour {
 		if (coll.gameObject.tag == "Wall") {
 			if (!currentlyDestroyed) {
 				--life;
+				if (OnDeath != null)
+					OnDeath();
 				StartCoroutine(Die());
 			}
 		}
@@ -57,6 +61,8 @@ public class Electron : MonoBehaviour {
 			//GetComponent<SpriteRenderer>().enabled = true;
 			currentlyDestroyed = false;
 			checkpoint.MoveToLastCheckpoint();
+			if (OnRespawn != null)
+				OnRespawn();
 		}
 	}
 }
