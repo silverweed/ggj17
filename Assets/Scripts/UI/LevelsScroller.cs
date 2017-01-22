@@ -17,7 +17,7 @@ public class LevelsScroller : MonoBehaviour {
     bool theySeeMeScrollinTheyHatin = false;
     bool onButton = false;
 
-    void Awake() {
+    void Start() {
         foreach (Transform child in transform) { levels.Add(child.GetComponent<RectTransform>()); }
         var joystick = GameObject.FindObjectOfType<JoystickListener>();
         back = GameObject.Find("Back").GetComponent<Button>();
