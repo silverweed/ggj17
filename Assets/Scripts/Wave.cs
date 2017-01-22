@@ -16,8 +16,6 @@ public class Wave : MonoBehaviour {
 		}
 	}
 
-	public bool overrideColor;
-	public Color color;
 	public Wave.Shape shape;
 	public Material waveMaterial;
 	public float waveThickness = 0.1f;
@@ -45,9 +43,7 @@ public class Wave : MonoBehaviour {
 	}
 
 	void Start() {
-		if (overrideColor)
-			DynamicGI.SetEmissive(renderer.GetComponent<Renderer>(), color);
-	ShapeForCode = shape;
+		ShapeForCode = shape;
 	}
 
 	float ScreenWidth() {
