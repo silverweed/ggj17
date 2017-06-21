@@ -11,13 +11,13 @@ public class TotorialPad : MonoBehaviour {
     GameObject triangle;
 
     void Awake() {
-        pad = transform.FindChild("Pad").gameObject;
-        leftHorizontal = transform.FindChild("LeftHorizontal").gameObject;
-        leftVertical = transform.FindChild("LeftVertical").gameObject;
-        sin = transform.FindChild("Sin").gameObject;
-        square = transform.FindChild("Square").gameObject;
-        sawtooth = transform.FindChild("Sawtooth").gameObject;
-        triangle = transform.FindChild("Triangle").gameObject;
+        pad = transform.Find("Pad").gameObject;
+        leftHorizontal = transform.Find("LeftHorizontal").gameObject;
+        leftVertical = transform.Find("LeftVertical").gameObject;
+        sin = transform.Find("Sin").gameObject;
+        square = transform.Find("Square").gameObject;
+        sawtooth = transform.Find("Sawtooth").gameObject;
+        triangle = transform.Find("Triangle").gameObject;
         pad.SetActive(false);
         foreach (Transform child in transform) { child.gameObject.SetActive(false); }
     }

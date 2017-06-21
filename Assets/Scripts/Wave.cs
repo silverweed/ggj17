@@ -35,10 +35,10 @@ public class Wave : MonoBehaviour {
 		POINTS = Mathf.Min(1080, Screen.width /2);
 		points = new Vector3[POINTS];
 		renderer = gameObject.AddComponent<LineRenderer>();
-		renderer.numPositions = POINTS;
+		renderer.positionCount = POINTS;
 		renderer.startWidth = waveThickness;
 		renderer.material = waveMaterial;
-		step = ScreenWidth() / (renderer.numPositions - 1);
+		step = ScreenWidth() / (renderer.positionCount - 1);
 		particle = GameObject.Find("Particle").transform;
 	}
 

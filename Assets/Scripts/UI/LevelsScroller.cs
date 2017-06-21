@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 public class LevelsScroller : MonoBehaviour {
 
 	static readonly string[] LEVELS = {
-		"Tutorial0",
-		"Tutorial1_graficaElisa",
-		"Levellolo3_graficaElisa",
-		"Elegance_graficaElisa",
+		"Level1_Frequency",
+		"Level2_Amplitude",
+		"Level3_Shapes",
+		"Level4_Elegance",
 		//"Levellolo4",
     };
 
@@ -23,7 +23,11 @@ public class LevelsScroller : MonoBehaviour {
 	bool onButton = false;
 
 	void Start() {
-		foreach (Transform child in transform) { if (child.gameObject.activeSelf) { levels.Add(child.GetComponent<RectTransform>()); } }
+		foreach (Transform child in transform) {
+			if (child.gameObject.activeSelf) {
+				levels.Add(child.GetComponent<RectTransform>());
+			}
+		}
 		var joystick = GameObject.FindObjectOfType<JoystickListener>();
 		back = GameObject.Find("Back").GetComponent<Button>();
 		joystick.OnJoystickLeft += () => StartCoroutine(ScrollRight());

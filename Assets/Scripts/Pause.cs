@@ -26,8 +26,8 @@ public class Pause : MonoBehaviour {
 	}
 
 	void Start() {
-		pauseButtons = transform.FindChild("PauseButtons").gameObject;
-		pauseImage = transform.FindChild("PauseImage").gameObject;
+		pauseButtons = transform.Find("PauseButtons").gameObject;
+		pauseImage = transform.Find("PauseImage").gameObject;
 		wave = GameObject.FindObjectOfType<Wave>();
 		controls = GameObject.FindObjectOfType<Controls>();
 		pad = GameObject.FindObjectOfType<ShowPad>();
